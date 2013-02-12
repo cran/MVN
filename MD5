@@ -1,0 +1,11 @@
+9d7a022244760bfe54c10b31d2f5ffd4 *DESCRIPTION
+df390c53434517b304ac5db487184641 *NAMESPACE
+b70b420bed274e152dec75cdd4fc456b *R/HZ.test.R
+74b9cca187fe62bb391b0e530ccad540 *R/mardia.test.R
+ae6f51202d06a60906dcdcd24387c806 *R/royston.test.R
+8dd942c1ef80aa50f437463fa1463146 *data/data.rda
+781ce61ebe586a1bbd273d45cd887fbf *man/HZ.test.Rd
+332384f3945ec2d36dcae0777af5c300 *man/MVN-package.Rd
+7ce9bef0069f3df165529af70432923c *man/data.Rd
+cd599b1b3403b61208aa1dce0d5a7174 *man/mardia.test.Rd
+4e609aa95863539e9b8eaba2c7fc7282 *man/royston.test.Rd
