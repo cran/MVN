@@ -1,8 +1,6 @@
 royston.test <-
-function (data, plot=TRUE) 
+function (data, qqplot = FALSE) 
 {
-    require(nortest)
-    require(moments)
     dname <- deparse(substitute(data))
     data <- as.matrix(data)
     p <- dim(data)[2]
@@ -11,6 +9,7 @@ function (data, plot=TRUE)
     z <- as.data.frame(z)
     w <- matrix(nrow <- p, ncol = 1)
     w <- as.data.frame(w)
+    data.org <- data    
     if (n <= 3) {
         stop("n must be greater than 3")
     }
@@ -76,18 +75,21 @@ function (data, plot=TRUE)
     Sa <- cov(data)
     D <- data %*%solve(Sa)%*% t(data)
     
-    if (plot) {    
+    if (qqplot) {    
               d <- diag(D)    
-              r=rank(d)  
-              chi2q=qchisq((r-0.5)/n,p)
-              plot(chi2q,d,pch=19,main="Chi-Square Q-Q Plot",xlab="Chi-Square Quantile",ylab="Squared Mahalanobis Distance")
-              abline(0, 1,lwd=2, col = "black")
+              r <- rank(d)  
+              chi2q <- qchisq((r-0.5)/n,p)
+              plot(chi2q, d, pch = 19, main = "Chi-Square Q-Q Plot", xlab = "Chi-Square Quantile", ylab = "Squared Mahalanobis Distance")
+              abline(0, 1,lwd = 2, col = "black")
               }
     
     
     RH <- (edf * (sum(Res)))/p
     pv <- pchisq(RH, edf, lower.tail = FALSE)
-    results <- list(statistic=c(H = RH),p.value = pv,method = "Royston's Multivariate Normality Test",data.name = dname )
-    class(results) <- "htest"
-    return(results)
+    h.test <- list(statistic = c(H = RH), p.value = pv,method = "Royston's Multivariate Normality Test",data.name = dname )
+    class(h.test) <- "htest"
+    results <- list(h.test = h.test, data = data.org)
+    print(h.test)
+    class(results) <- "MVN"
+    invisible(results)
  }

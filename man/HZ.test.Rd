@@ -7,16 +7,17 @@ Henze-Zirkler's Multivariate Normality Test
 This function performs Henze-Zirkler's Multivariate Normality Test. 
 }
 \usage{
-HZ.test(data, cov = TRUE, plot = TRUE)
+HZ.test(data, cov = TRUE, qqplot = FALSE)
 }
 \arguments{
   \item{data}{a numeric matrix or data frame}
-  \item{cov}{if \code{TRUE} covariance matrix normalized by \code{n}, if \code{FALSE} normalized by \code{n-1}}
-  \item{plot}{if \code{TRUE} it draws a chi-square Q-Q plot}
+  \item{cov}{if \code{TRUE} covariance matrix is normalized by \code{n}, if \code{FALSE} it is normalized by \code{n-1}}
+  \item{qqplot}{if \code{TRUE} it draws a chi-square Q-Q plot}
+
 }
 \details{
 The Henze-Zirkler test is based on a non-negative functional distance that
-measures the distance between two distribution functions. If the data is multivariate normality, the test statistic HZ is 
+measures the distance between two distribution functions. If the data is multivariate normal, the test statistic HZ is 
 approximately lognormally distributed. It proceeds to calculate the mean,
 variance and smoothness parameter. Then, mean and variance are 
 lognormalized and the p-value is estimated.
@@ -36,13 +37,16 @@ Henze, N. and Wagner, Th. (1997), A New Approach to the BHEP tests for multivari
 Johnson, R. A. and Wichern, D. W. (1992), Applied Multivariate Statistical Analysis. 3rd. ed. New-Jersey:Prentice Hall.
  
 Mecklin, C. J. and Mundfrom, D. J. (2003), On Using Asymptotic Critical Values in Testing for Multivariate Normality. \url{http://interstat.statjournals.net/YEAR/2003/articles/0301001.pdf}
+
 }
 \author{
-  Selcuk KORKMAZ \email{selcuk.korkmaz@hacettepe.edu.tr}
+Selcuk Korkmaz \email{selcuk.korkmaz@hacettepe.edu.tr}, Dincer Goksuluk \email{dincer.goksuluk@hacettepe.edu.tr}
 }
+
 \seealso{
-\code{\link[MVN]{royston.test}} \code{\link[MVN]{mardia.test}}
+\code{\link[MVN]{royston.test}} \code{\link[MVN]{mardia.test}} \code{\link[MVN]{mvn.plot}}
 }
 \examples{
-data=iris[1:50,1:4] # Iris data only for setosa and four variables
-HZ.test(data)}
+data = iris[1:50, 1:4] # Iris data only for setosa and four variables
+result = HZ.test(data, qqplot = TRUE)
+}

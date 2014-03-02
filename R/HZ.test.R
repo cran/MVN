@@ -1,10 +1,11 @@
 HZ.test <-
-function (data, cov=TRUE, plot=TRUE) 
+function (data, cov = TRUE, qqplot = FALSE) 
 {
  dname <- deparse(substitute(data))
      data <- as.matrix(data)
      n <- dim(data)[1]
      p <- dim(data)[2]
+     data.org = data
  
      if (cov){ 
              S <- ((n-1)/n)*cov(data)
@@ -16,14 +17,14 @@ function (data, cov=TRUE, plot=TRUE)
 dif <- scale(data, scale = FALSE)
 
 
-Dj = diag(dif%*%solve(S)%*%t(dif))  #squared-Mahalanobis' distances
+Dj <- diag(dif%*%solve(S)%*%t(dif))  #squared-Mahalanobis' distances
 
-Y = data%*%solve(S)%*%t(data)
+Y <- data%*%solve(S)%*%t(data)
 
 
-Djk = - 2*t(Y) + matrix(diag(t(Y)))%*%matrix(c(rep(1,n)),1,n) + matrix(c(rep(1,n)),n,1)%*%diag(t(Y))
+Djk <- - 2*t(Y) + matrix(diag(t(Y)))%*%matrix(c(rep(1,n)),1,n) + matrix(c(rep(1,n)),n,1)%*%diag(t(Y))
 
-b = 1/(sqrt(2))*((2*p + 1)/4)^(1/(p + 4))*(n^(1/(p + 4))) #smoothing
+b <- 1/(sqrt(2))*((2*p + 1)/4)^(1/(p + 4))*(n^(1/(p + 4))) #smoothing
 {                                                                 #parameter
 if (qr(S)$rank == p){    
                      HZ = n * (1/(n^2) * sum(sum(exp( - (b^2)/2 * Djk))) - 2 *
@@ -35,35 +36,38 @@ else {
      }  
 
 }
-wb = (1 + b^2)*(1 + 3*b^2)
+wb <- (1 + b^2)*(1 + 3*b^2)
 
-a = 1 + 2*b^2
+a <- 1 + 2*b^2
 
-mu = 1 - a^(- p/2)*(1 + p*b^2/a + (p*(p + 2)*(b^4))/(2*a^2)) #HZ mean
+mu <- 1 - a^(- p/2)*(1 + p*b^2/a + (p*(p + 2)*(b^4))/(2*a^2)) #HZ mean
 
-si2 = 2*(1 + 4*b^2)^(- p/2) + 2*a^( - p)*(1 + (2*p*b^4)/a^2 + (3*p*
+si2 <- 2*(1 + 4*b^2)^(- p/2) + 2*a^( - p)*(1 + (2*p*b^4)/a^2 + (3*p*
     (p + 2)*b^8)/(4*a^4)) - 4*wb^( - p/2)*(1 + (3*p*b^4)/(2*wb) + (p*
     (p + 2)*b^8)/(2*wb^2)) #HZ variance
 
-pmu = log(sqrt(mu^4/(si2 + mu^2))) #lognormal HZ mean
-psi = sqrt(log((si2 + mu^2)/mu^2)) #lognormal HZ variance
+pmu <- log(sqrt(mu^4/(si2 + mu^2))) #lognormal HZ mean
+psi <- sqrt(log((si2 + mu^2)/mu^2)) #lognormal HZ variance
 
-P = 1 - plnorm(HZ,pmu,psi) #P-value associated to the HZ statistic
-
-
+P <- 1 - plnorm(HZ,pmu,psi) #P-value associated to the HZ statistic
 
 
-     if (plot){    
+
+
+     if (qqplot){    
               d <- Dj    
-              r=rank(d)  
-              chi2q=qchisq((r-0.5)/n,p)
-              plot(chi2q,d,pch=19,main="Chi-Square Q-Q Plot",
-              xlab="Chi-Square Quantile",ylab="Squared Mahalanobis Distance")
-              abline(0, 1,lwd=2, col = "black")
+              r <- rank(d)  
+              chi2q <- qchisq((r-0.5)/n,p)
+              plot(chi2q, d, pch = 19, main = "Chi-Square Q-Q Plot",
+              xlab = "Chi-Square Quantile",ylab="Squared Mahalanobis Distance")
+              abline(0, 1,lwd = 2, col = "black")
               }
 
 
-results <- list(statistic=c(HZ = HZ),p.value = P,method = "Henze-Zirkler's Multivariate Normality Test",data.name = dname )
-    class(results) <- "htest"
-    return(results)
+h.test <- list(statistic = c(HZ = HZ), p.value = P,method = "Henze-Zirkler's Multivariate Normality Test", data.name = dname )
+class(h.test) <- "htest"
+results <- list(h.test = h.test, data = data.org)
+print(h.test)
+class(results) <- "MVN"
+invisible(results)
  }

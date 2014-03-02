@@ -12,15 +12,14 @@ The MVN library contain several multivariate normality tests such as Henze-Zirkl
 \tabular{ll}{
 Package: \tab MVN\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2013-02-04\cr
+Version: \tab 2.0\cr
+Date: \tab 2014-03-02\cr
 License: \tab GPL (>= 2)\cr
 }
-HZ.test(data)
-mardia.test(data)
-royston.test(data)
+
 }
 \author{
-Selcuk KORKMAZ
-Maintainer: Selcuk KORKMAZ \email{selcuk.korkmaz@hacettepe.edu.tr}
+Selcuk Korkmaz, Dincer Goksuluk
+
+Maintainer: Selcuk Korkmaz \email{selcuk.korkmaz@hacettepe.edu.tr}
 }

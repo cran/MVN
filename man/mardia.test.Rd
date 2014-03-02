@@ -7,12 +7,13 @@ Mardia's Multivariate Normality Test
 This function performs Mardia's Multivariate Normality Test. 
 }
 \usage{
-mardia.test(data, cov = TRUE, plot = TRUE)
+mardia.test(data, cov = TRUE, qqplot = FALSE)
 }
+
 \arguments{
   \item{data}{a numeric matrix or data frame}
-  \item{cov}{if \code{TRUE} covariance matrix normalized by \code{n}, if \code{FALSE} normalized by \code{n-1}}
-  \item{plot}{if \code{TRUE} it draws a chi-square Q-Q plot}
+  \item{cov}{if \code{TRUE} covariance matrix is normalized by \code{n}, if \code{FALSE} it is normalized by \code{n-1}}
+  \item{qqplot}{if \code{TRUE} it draws a chi-square Q-Q plot}
 }
 \details{
 Calculates the Mardia's multivariate skewness and kurtosis coefficients as well as their corresponding statistical tests. For large sample size the multivariate skewness is asymptotically distributed as a Chi-square random variable; here it is corrected for small sample size. Likewise, the multivariate kurtosis it is distributed as a unit-normal.
@@ -37,12 +38,13 @@ Mardia, K. V. (1974), Applications of some measures of multivariate skewness and
 Stevens, J. (1992), Applied Multivariate Statistics for Social Sciences. 2nd. ed. New-Jersey:Lawrance Erlbaum Associates Publishers. pp. 247-248.
 }
 \author{
-  Selcuk KORKMAZ \email{selcuk.korkmaz@hacettepe.edu.tr}
+Selcuk Korkmaz\email{selcuk.korkmaz@hacettepe.edu.tr}, Dincer Goksuluk\email{dincer.goksuluk@hacettepe.edu.tr} 
 }
+
 \seealso{
-\code{\link[MVN]{royston.test}} \code{\link[MVN]{HZ.test}}
+\code{\link[MVN]{royston.test}} \code{\link[MVN]{HZ.test}} \code{\link[MVN]{mvn.plot}}
 }
 \examples{
-data=iris[1:50,1:4] # Iris data only for setosa and four variables
-mardia.test(data)
+data = iris[1:50, 1:4] # Iris data only for setosa and four variables
+result = mardia.test(data, qqplot = TRUE)
 }

@@ -1,1 +1,11 @@
 exportPattern("^[[:alpha:]]+")
+
+import(nortest)
+import(moments)
+import(MASS)
+
+export(mardia.test)
+export(HZ.test)
+export(royston.test)
+export(mvn.plot)
+

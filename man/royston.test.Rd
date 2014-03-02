@@ -1,27 +1,28 @@
 \name{royston.test}
+
 \alias{royston.test}
-\title{
-Royston's Multivariate Normality Test
-}
-\description{
-This function performs Royston's Multivariate Normality Test. 
-}
-\usage{
-royston.test(data, plot = TRUE)
-}
+
+\title{Royston's Multivariate Normality Test}
+
+\description{This function performs Royston's Multivariate Normality Test.}
+
+\usage{royston.test(data, qqplot = FALSE)}
+
 \arguments{
-  \item{data}{a numeric matrix or data frame}
-  \item{plot}{if \code{TRUE} it draws a chi-square Q-Q plot}
+	\item{data}{a numeric matrix or data frame}
+  	\item{qqplot}{if \code{TRUE} it draws a chi-square Q-Q plot}
 }
+
 \details{
 A function to generate the Shapiro-Wilk's W statistic needed to feed the Royston's H test for multivariate normality
 However, if kurtosis of the data greater than 3 then \code{Shapiro-Francia} test is used for leptokurtic samples else \code{Shapiro-Wilk} test is used for platykurtic samples.
 }
+
 \value{
  \item{H}{the value of Royston's H statistic at significance level \code{0.05}}
- \item{p-value}{an approximate p-value for the test with respect to equivalent degrees of freedom (\code{edf})
+ \item{p-value}{an approximate p-value for the test with respect to equivalent degrees of freedom (\code{edf})}
 }
-}
+
 \references{
 Johnson, R.A. and Wichern, D. W. (1992). Applied Multivariate Statistical Analysis. 3rd. ed. New-Jersey:Prentice Hall.
 
@@ -40,12 +41,14 @@ Shapiro, S. and Wilk, M. (1965). An analysis of variance test for normality. Bio
 Trujillo-Ortiz, A., R. Hernandez-Walls, K. Barba-Rojo and L. Cupul-Magana. (2007). Roystest:Royston's Multivariate Normality Test. A MATLAB file. URL \url{http://www.mathworks.com/matlabcentral/fileexchange/17811}
 }
 \author{
-Selcuk KORKMAZ \email{selcuk.korkmaz@hacettepe.edu.tr}
+Selcuk Korkmaz\email{selcuk.korkmaz@hacettepe.edu.tr}, Dincer Goksuluk \email{dincer.goksuluk@hacettepe.edu.tr}
 }
+
+
 \seealso{
-\code{\link[MVN]{HZ.test}} \code{\link[MVN]{mardia.test}}
+\code{\link[MVN]{HZ.test}} \code{\link[MVN]{mardia.test}} \code{\link[MVN]{mvn.plot}}
 }
 \examples{
-data=iris[1:50,1:4] # Iris data only for setosa and four variables
-royston.test(data)
+data = iris[1:50, 1:4] # Iris data only for setosa and four variables
+result = royston.test(data, qqplot = TRUE)
 }
