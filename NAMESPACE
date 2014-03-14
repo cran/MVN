@@ -1,11 +1,15 @@
 exportPattern("^[[:alpha:]]+")
 
+import(methods)
+import(MASS)
 import(nortest)
 import(moments)
-import(MASS)
 
-export(mardia.test)
-export(HZ.test)
-export(royston.test)
-export(mvn.plot)
+export(hzTest)
+export(mardiaTest)
+export(roystonTest)
+export(mvnPlot)
 
+exportClasses("hz")
+exportClasses("mardia")
+exportClasses("royston")

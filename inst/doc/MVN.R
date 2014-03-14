@@ -15,8 +15,8 @@ dim(iris)
 
 
 ## ----"subset of the data"------------------------------------------------
-data=iris[1:50, 1:4]
-head(data)
+Iris=iris[1:50, 1:4]
+head(Iris)
 
 
 ## ----"load package", message=FALSE---------------------------------------
@@ -24,35 +24,33 @@ library(MVN)
 
 
 ## ----"Mardia test", message=FALSE----------------------------------------
-result <- mardia.test(data, cov = TRUE, qqplot = FALSE)
+result <- mardiaTest(Iris, cov = TRUE, qqplot = FALSE)
+result
 
 
 ## ----"Henze-Zirkler test", message=FALSE---------------------------------
-result <- HZ.test(data, cov = TRUE, qqplot = FALSE)
+result <- hzTest(Iris, cov = TRUE, qqplot = FALSE)
+result
 
 
 ## ----"Royston test", message=FALSE---------------------------------------
-result <- royston.test(data, qqplot = FALSE)
+result <- roystonTest(Iris, qqplot = FALSE)
+result
 
 
-## ----"qq-plot", message=FALSE--------------------------------------------
-result <- royston.test(data, qqplot = TRUE)
+## ----"qq-plot", message=FALSE, fig.width = 5.8, fig.height = 5.8---------
+result <- roystonTest(Iris, qqplot = TRUE)
+result
 
 
-## ----"perspective plot", message=FALSE-----------------------------------
-data = iris[1:50, 1:2] 
-result = HZ.test(data)
-mvn.plot(result, type = "persp", default = TRUE)
+## ----"perspective plot", message=FALSE, fig.width = 5.8, fig.height = 5.8----
+Iris = iris[1:50, 1:2] 
+result = hzTest(Iris)
+mvnPlot(result, type = "persp", default = TRUE)
 
 
 ## ----"contour plot", message=FALSE, fig.width = 5.8, fig.height = 5.8----
-data = iris[1:50, 1:2] 
-result = mardia.test(data)
-mvn.plot(result, type = "contour", default = TRUE)
-
-
-## ----"perspective and contour plots", message=FALSE----------------------
-mvn.plot(result, type = "both", default = TRUE)
+mvnPlot(result, type = "contour", default = TRUE)
 
 
 ## ----"Session info"------------------------------------------------------

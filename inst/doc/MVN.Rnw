@@ -5,12 +5,13 @@
 \usepackage[left=2.5cm, top=2.5cm, right=2.5cm, bottom=2cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
+\usepackage{hyperref}
 
 \title{MVN package: Multivariate Normality Tests}
 \author{Selcuk Korkmaz$^1$, Dincer Goksuluk\\[0.35cm]
 \small{Hacettepe University, Faculty of Medicine, Department of Biostatistics, Ankara, TURKEY}\\[0cm]\texttt{\small{$^1$selcuk.korkmaz@hacettepe.edu.tr}}
 } 
-\date{\texttt{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2014-03-02)}
+\date{\texttt{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2014-03-14)}
 
 \begin{document}
 
@@ -32,7 +33,7 @@ Assessing the assumption of multivariate normality is required by many parametri
 \newpage
 \section{Preparation of input data}
 
-\texttt{MVN} package expects a numeric matrix or a data frame that contains minimum two variables. In this vignette, we will work with the \texttt{Iris} data set. This data set is a multivariate data set introduced by Ronald A. Fisher (1936) as an application of discriminant analysis \cite{fisher1936}. It is also called Anderson's Iris data set because Edgar Anderson collected the data to measure the morphologic variation of Iris flowers of three related species \cite{anderson1936}. The data set consists of 50 samples from each of three species of Iris including \texttt{setosa}, \texttt{virginica} and \texttt{versicolor}. For each sample, four variables were measured including the length and the width of the sepals and petals, in centimeters. We will check the multivariate normality of the Iris data set by using three multivariate normality tests, including Mardia's, Royston's and Henze-Zirkler's multivariate normality tests. 
+\texttt{MVN} package expects a numeric matrix or a data frame that contains minimum two variables. In this vignette, we will work with the \emph{Iris} data set. This data set is a multivariate data set introduced by Ronald A. Fisher (1936) as an application of discriminant analysis \cite{fisher1936}. It is also called Anderson's Iris data set because Edgar Anderson collected the data to measure the morphologic variation of Iris flowers of three related species \cite{anderson1936}. The data set consists of 50 samples from each of three species of Iris including \emph{setosa}, \emph{virginica} and \emph{versicolor}. For each sample, four variables were measured including the length and the width of the \emph{sepals} and \emph{petals}, in centimeters. We will check the multivariate normality of the \emph{Iris} data set by using three multivariate normality tests, including Mardia's, Royston's and Henze-Zirkler's multivariate normality tests. 
 
 First, we can call our data set using \texttt{data} function and display it using \texttt{head} function as follows:
 
@@ -41,23 +42,23 @@ data(iris)
 head(iris)
 @
 
-The Iris data is in \texttt{data.frame} format which consists of 5 variables (\texttt{Sepal.Length}, \texttt{Sepal.Width}, \texttt{Petal.Length}, \texttt{Petal.Width}, and \texttt{Species}) and 150 samples.
+The \emph{Iris} data is in \texttt{data.frame} format which consists of 5 variables (\emph{Sepal.Length}, \emph{Sepal.Width}, \emph{Petal.Length}, \emph{Petal.Width}, and \emph{Species}) and 150 samples.
 
 <<"class and dimension of the data">>=
 class(iris)
 dim(iris)
 @
 
-For simplicity, we will work with a subset of the Iris data with first 50 samples and leave out the class label.
+For simplicity, we will work with a subset of the \emph{Iris} data with first 50 samples without class label.
 
 <<"subset of the data">>=
-data=iris[1:50, 1:4]
-head(data)
+Iris=iris[1:50, 1:4]
+head(Iris)
 @
 
 \section{Multivariate Normality Tests}
 
-We will introduce three multivariate normality tests below, including Mardia's Multivariate Normality Test, Henze-Zirkler's Multivariate Normality Test and Royston's Multivariate Normality Test.
+We will introduce three multivariate normality tests below, including Mardia's, Henze-Zirkler's and Royston's Multivariate Normality Tests.
 
 Before using our multivariate normality tests, we need to load our \texttt{MVN} package as follows:
 
@@ -67,80 +68,74 @@ library(MVN)
 
 \subsection{Mardia's Multivariate Normality Test}
 
-Mardia's test is based on multivariate extensions of skewness and kurtosis measures \cite{mardia1970}. Now, we will check the multivariate normality of the Iris data using \texttt{mardia.test} function in the \texttt{MVN} package. This function calculates the Mardia's multivariate skewness and kurtosis coefficients as well as their corresponding statistical tests. For large sample size the multivariate skewness is asymptotically distributed as a Chi-square random variable; here it is corrected for small sample size. Likewise, the multivariate kurtosis is distributed as a unit-normal\cite{mardia1974, stevens1992, trujillo2003}.
+Mardia's test is based on multivariate extensions of \emph{skewness} and \emph{kurtosis} measures \cite{mardia1970}. Now, we will check the multivariate normality of the \emph{Iris} data using \texttt{mardiaTest} function in the \texttt{MVN} package. This function calculates the Mardia's multivariate skewness and kurtosis coef\mbox{}ficients as well as their corresponding statistical tests. For large sample size the multivariate skewness is asymptotically distributed as a chi-square random variable; here it is corrected for small sample size. Likewise, the multivariate kurtosis is distributed as a unit-normal\cite{mardia1974, stevens1992, trujillo2003}.
 
 <<"Mardia test", message=FALSE>>=
-result <- mardia.test(data, cov = TRUE, qqplot = FALSE)
+result <- mardiaTest(Iris, cov = TRUE, qqplot = FALSE)
+result
 @
  
-Here, \texttt{g1p}: Mardia's estimation of multivariate skew, \texttt{skew}: Mardia's skew statistic, \texttt{p.value.skew}: p-value of skew statistic, \texttt{small.skew}: Mardia's small sample skew statistic, \texttt{p.value.small}: p-value of small sample skew statistic, \texttt{g2p}: Mardia's g2p estimate of multivariate kurtosis, \texttt{kurtosis}: Mardia's multivariate kurtosis statistic and \texttt{p.value.kurt}: p-value of kurtosis statistic.
+Here, \texttt{g1p}: Mardia's estimation of multivariate skew, \texttt{skew}: Mardia's skew statistic, \texttt{p.value.skew}: p-value of skew statistic, \texttt{g2p}: Mardia's g2p estimate of multivariate kurtosis, \texttt{kurtosis}: Mardia's multivariate kurtosis statistic, \texttt{p.value.kurt}: p-value of kurtosis statistic, \texttt{small.skew}: Mardia's small sample skew statistic and \texttt{p.value.small}: p-value of small sample skew statistic.
 
 As seen above results, both skewness $(p=0.1772)$ and kurtosis  $(p=0.1953)$ values indicate multivariate normality.
 
 \subsection{Henze-Zirkler's Multivariate Normality Test}
 
-The Henze-Zirkler test is based on a non-negative functional distance that measures the distance between two distribution functions. If the data is multivariate normal, the test statistic is approximately lognormally distributed. It proceeds to calculate the mean, variance and smoothness parameter. Then, mean and variance are lognormalized and the p-value is estimated. We can use \texttt{HZ.test} function in the \texttt{MVN} package to calculate the Henze-Zirkler's Multivariate Normality Test \cite{trujillo2007a, henze1990,henze1997, johnson1992, mecklin2003}.
+The Henze-Zirkler test is based on a non-negative functional distance that measures the distance between two distribution functions. If the data is multivariate normal, the test statistic is approximately log-normally distributed. It proceeds to calculate the mean, variance and smoothness parameter. Then, mean and variance are log-normalized and the p-value is estimated. We can use \texttt{hzTest} function in the \texttt{MVN} package to calculate the Henze-Zirkler's Multivariate Normality Test \cite{trujillo2007a, henze1990,henze1997, johnson1992, mecklin2003}.
 
 <<"Henze-Zirkler test", message=FALSE>>=
-result <- HZ.test(data, cov = TRUE, qqplot = FALSE)
+result <- hzTest(Iris, cov = TRUE, qqplot = FALSE)
+result
 @
 
 Here, \texttt{HZ} is the value of Henze-Zirkler statistic at significance level $0.05$ and \texttt{p-value} is a p-value for the Henze-Zirkler's Multivariate Normality Test. 
 
-Since the p-value, which optain from the \texttt{HZ.test}, lower than $0.05$, one can conclude that this multivariate data set deviates from multivariate normality.  
+Since the p-value, which optain from the \texttt{hzTest}, lower than $0.05$, one can conclude that this multivariate data set deviates from multivariate normality.  
 
 \subsection{Royston's Multivariate Normality Test}
 
-Royston's H test uses Shapiro-Wilk's W statistic for multivariate normality. However, if kurtosis of the data greater than $3$ then \texttt{Shapiro-Francia} test is used for leptokurtic samples else \texttt{Shapiro-Wilk} test is used for platykurtic samples \cite{johnson1992, mecklin2005, royston1982, royston1983, royston1992, royston1995, shapiro1965, trujillo2007b}. 
+Royston's H test uses \texttt{Shapiro-Wilk's W} statistic for multivariate normality. However, if kurtosis of the data greater than $3$ then \texttt{Shapiro-Francia} test is used for leptokurtic samples else \texttt{Shapiro-Wilk} test is used for platykurtic samples \cite{johnson1992, mecklin2005, royston1982, royston1983, royston1992, royston1995, shapiro1965, trujillo2007b}. 
 
 <<"Royston test", message=FALSE>>=
-result <- royston.test(data, qqplot = FALSE)
+result <- roystonTest(Iris, qqplot = FALSE)
+result
 @
 
 Here, \texttt{H} is the value of Royston's H statistic at significance level \texttt{0.05} and \texttt{p-value} is an approximate p-value for the test with respect to equivalent degrees of freedom (\texttt{edf}). 
 
-According to the Royston's Multivariate Normality Test, the Iris data set does not appear to follow a multivariate normal distribution $(p < 0.001)$.
+According to the Royston's Multivariate Normality Test, the \emph{Iris} data set does not appear to follow a multivariate normal distribution $(p < 0.001)$.
 
 \section{Multivariate Normality Plots}
 
-Our \texttt{MVN} package has ability to draw three multivariate plots. We can use \texttt{qqplot = TRUE} option in the \texttt{mardia.test}, \texttt{HZ.test} and \texttt{royston.test} functions to draw a Q-Q plot. Furthermore, we can use \texttt{mvn.plot} function in our \texttt{MVN} package to draw perspective and contour plots for binary data sets.
+Our \texttt{MVN} package has ability to create three multivariate plots. We can use \texttt{qqplot = TRUE} option in the \texttt{mardiaTest}, \texttt{hzTest} and \texttt{roystonTest} functions to create a chi-suqare Q-Q plot. Furthermore, we can use \texttt{mvnPlot} function in our \texttt{MVN} package to create perspective and contour plots for binary data sets.
 
 \subsection{Q-Q Plot}
 
-We can draw a Q-Q plot for our Iris data set to see whether there is any deviation from multivariate normality.
+We can create a chi-square Q-Q plot for our \emph{Iris} data set to see whether there is any deviation from multivariate normality.
 
-<<"qq-plot", message=FALSE>>=
-result <- royston.test(data, qqplot = TRUE)
+<<"qq-plot", message=FALSE, fig.width = 5.8, fig.height = 5.8>>=
+result <- roystonTest(Iris, qqplot = TRUE)
+result
 @
 
-If the data set follows approximately a multivariate normal distribution, the resulting plot should be roughly straight line. As you can see from the Q-Q plot above, there are some deviations from the straight line and this indicates possible departures from a multivariate normal distribution.
+If the data set follows approximately a multivariate normal distribution, the resulting plot should be roughly straight line. As you can see from the chi-square Q-Q plot above, there are some deviations from the straight line and this indicates possible departures from a multivariate normal distribution.
 
 
 \subsection{Perspective and Contour Plots}
 
-We can use the \texttt{mvn.plot} function in the \texttt{MVN} package to draw a perspective plot for a binary data set. In order to get a perspective plot, we should continue with two variables, i.e., bivariate normal distribution. As an example, we subset first 50 rows and Sepal measures of Iris data. Sepal measures of first 50 samples are bivariate normal. We can see that from the perspective plot.  Perspective plot produces 3-dimensional bell-shaped graph when data is bivariate normal. 
+We can use the \texttt{mvnPlot} function in the \texttt{MVN} package to create a perspective plot for a binary data set. In order to get a perspective plot, we should continue with two variables, i.e., bivariate normal distribution. As an example, we subset first 50 rows and \emph{sepal} measures of \emph{Iris}  data. Sepal measures of first 50 samples are bivariate normal. We can see that from the perspective plot.  Perspective plot produces 3-dimensional bell-shaped graph when data is bivariate normal. 
 
-<<"perspective plot", message=FALSE>>=
-data = iris[1:50, 1:2] 
-result = HZ.test(data)
-mvn.plot(result, type = "persp", default = TRUE)
+<<"perspective plot", message=FALSE, fig.width = 5.8, fig.height = 5.8>>=
+Iris = iris[1:50, 1:2] 
+result = hzTest(Iris)
+mvnPlot(result, type = "persp", default = TRUE)
 @
 
-Another alternative is to use 2-dimensional contour graphs. We can use the \texttt{mvn.plot} function in the \texttt{MVN} package to draw a contour plot for a binary data set.  Contour graphs are very useful since it gives information about normality and correlation at the same time. From contour graph below, we can say that there is a positive correlation among sepal measures of flowers since contour lines lie around main diagonal.
+Another alternative is to use 2-dimensional contour graphs. We can use the \texttt{mvnPlot} function in the \texttt{MVN} package to create a contour plot for a binary data set.  Contour graphs are very useful since it gives information about normality and correlation at the same time. From contour graph below, we can say that there is a positive correlation among \emph{sepal} measures of flowers since contour lines lie around main diagonal.
 
 <<"contour plot", message=FALSE, fig.width = 5.8, fig.height = 5.8>>=
-data = iris[1:50, 1:2] 
-result = mardia.test(data)
-mvn.plot(result, type = "contour", default = TRUE)
+mvnPlot(result, type = "contour", default = TRUE)
 @
-
-Moreover, we can draw two plots at the same time as follows:
-
-<<"perspective and contour plots", message=FALSE>>=
-mvn.plot(result, type = "both", default = TRUE)
-@
-
-Using two graphs together may not be very useful since plot margins for perspective and contour graphs are different. Contour graph uses larger graph area comparing to the perspective plot. However, it might be a better solution to draw graphs separately and combine them manually. 
 
 \newpage
 \section{Session info}
