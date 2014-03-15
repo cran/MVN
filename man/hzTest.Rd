@@ -46,7 +46,7 @@ Mecklin, C. J. and Mundfrom, D. J. (2003), On Using Asymptotic Critical Values i
 
 }
 \author{
-Selcuk Korkmaz and Dincer Goksuluk
+Selcuk Korkmaz <\email{selcuk.korkmaz@hacettepe.edu.tr}> and Dincer Goksuluk <\email{dincer.goksuluk@hacettepe.edu.tr}>
 }
 
 \seealso{

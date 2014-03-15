@@ -12,7 +12,7 @@ Assessing the assumption of multivariate normality is required by many parametri
 \tabular{ll}{
 Package: \tab MVN\cr
 Type: \tab Package\cr
-License: \tab What license is it under?\cr
+License: \tab GPL (>= 2)\cr
 }}
 \author{
 Selcuk Korkmaz and Dincer Goksuluk

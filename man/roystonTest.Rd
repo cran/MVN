@@ -45,7 +45,8 @@ Shapiro, S. and Wilk, M. (1965). An analysis of variance test for normality. Bio
 Trujillo-Ortiz, A., R. Hernandez-Walls, K. Barba-Rojo and L. Cupul-Magana. (2007). Roystest:Royston's Multivariate Normality Test. A MATLAB file. URL \url{http://www.mathworks.com/matlabcentral/fileexchange/17811}
 }
 \author{
-Selcuk Korkmaz and Dincer Goksuluk
+Selcuk Korkmaz <\email{selcuk.korkmaz@hacettepe.edu.tr}> and Dincer Goksuluk <\email{dincer.goksuluk@hacettepe.edu.tr}>
+
 }
 
 \seealso{

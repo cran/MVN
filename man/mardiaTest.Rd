@@ -47,7 +47,7 @@ Stevens, J. (1992), Applied Multivariate Statistics for Social Sciences. 2nd. ed
 
 }
 \author{
-Selcuk Korkmaz and Dincer Goksuluk
+Selcuk Korkmaz <\email{selcuk.korkmaz@hacettepe.edu.tr}> and Dincer Goksuluk <\email{dincer.goksuluk@hacettepe.edu.tr}>
 }
 
 \seealso{

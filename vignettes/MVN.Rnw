@@ -8,10 +8,10 @@
 \usepackage{hyperref}
 
 \title{MVN package: Multivariate Normality Tests}
-\author{Selcuk Korkmaz$^1$, Dincer Goksuluk\\[0.35cm]
+\author{Selcuk Korkmaz$^1$ and Dincer Goksuluk\\[0.35cm]
 \small{Hacettepe University, Faculty of Medicine, Department of Biostatistics, Ankara, TURKEY}\\[0cm]\texttt{\small{$^1$selcuk.korkmaz@hacettepe.edu.tr}}
 } 
-\date{\texttt{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2014-03-14)}
+\date{\texttt{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2014-03-15)}
 
 \begin{document}
 

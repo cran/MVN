@@ -19,5 +19,5 @@ An S4 class for Royston's Multivariate Normality Test
   }
 }
 \author{
-Selcuk Korkmaz and Dincer Goksuluk
+Selcuk Korkmaz <\email{selcuk.korkmaz@hacettepe.edu.tr}> and Dincer Goksuluk <\email{dincer.goksuluk@hacettepe.edu.tr}>
 }

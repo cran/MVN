@@ -31,7 +31,7 @@ After set the \code{default=FALSE} option, users can define their own plot setti
 }	
 
 \author{
-Selcuk Korkmaz and Dincer Goksuluk
+Selcuk Korkmaz <\email{selcuk.korkmaz@hacettepe.edu.tr}> and Dincer Goksuluk <\email{dincer.goksuluk@hacettepe.edu.tr}>
 }
 \note{
 Please be careful that this function creates perspective and contour plots when there are only two variables.
