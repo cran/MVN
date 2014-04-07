@@ -28,9 +28,27 @@ result <- mardiaTest(Iris, cov = TRUE, qqplot = FALSE)
 result
 
 
+## ----"mardia slots", message=FALSE---------------------------------------
+getSlots("mardia")
+
+
+## ----"mardiaTest slots", message=FALSE-----------------------------------
+result@p.value.skew
+result@p.value.kurt
+
+
 ## ----"Henze-Zirkler test", message=FALSE---------------------------------
 result <- hzTest(Iris, cov = TRUE, qqplot = FALSE)
 result
+
+
+## ----"hz slots", message=FALSE-------------------------------------------
+getSlots("hz")
+
+
+## ----"hzTest slots", message=FALSE---------------------------------------
+result@HZ
+result@p.value
 
 
 ## ----"Royston test", message=FALSE---------------------------------------
@@ -38,18 +56,27 @@ result <- roystonTest(Iris, qqplot = FALSE)
 result
 
 
-## ----"qq-plot", message=FALSE, fig.width = 5.8, fig.height = 5.8---------
+## ----"royston slots", message=FALSE--------------------------------------
+getSlots("hz")
+
+
+## ----"roystonTest slots", message=FALSE----------------------------------
+result@H
+result@p.value
+
+
+## ----"qq-plot", message=FALSE, fig.width = 6.5, fig.height = 6.5---------
 result <- roystonTest(Iris, qqplot = TRUE)
 result
 
 
-## ----"perspective plot", message=FALSE, fig.width = 5.8, fig.height = 5.8----
+## ----"perspective plot", message=FALSE, fig.width = 6.5, fig.height = 6.5----
 Iris = iris[1:50, 1:2] 
 result = hzTest(Iris)
 mvnPlot(result, type = "persp", default = TRUE)
 
 
-## ----"contour plot", message=FALSE, fig.width = 5.8, fig.height = 5.8----
+## ----"contour plot", message=FALSE, fig.width = 6.5, fig.height = 6.5----
 mvnPlot(result, type = "contour", default = TRUE)
 
 

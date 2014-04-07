@@ -11,7 +11,7 @@
 \author{Selcuk Korkmaz$^1$ and Dincer Goksuluk\\[0.35cm]
 \small{Hacettepe University, Faculty of Medicine, Department of Biostatistics, Ankara, TURKEY}\\[0cm]\texttt{\small{$^1$selcuk.korkmaz@hacettepe.edu.tr}}
 } 
-\date{\texttt{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2014-03-15)}
+\date{\texttt{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2014-04-07)}
 
 \begin{document}
 
@@ -79,6 +79,20 @@ Here, \texttt{g1p}: Mardia's estimation of multivariate skew, \texttt{skew}: Mar
 
 As seen above results, both skewness $(p=0.1772)$ and kurtosis  $(p=0.1953)$ values indicate multivariate normality.
 
+\texttt{mardiaTest} function has an S4 class called \texttt{mardia}. We can use \texttt{getSlots} function in order to get the slots in this S4 class.
+
+\newpage
+<<"mardia slots", message=FALSE>>=
+getSlots("mardia")
+@
+
+To access the informations which are stored in these slots, we can use \texttt{@} operator as follow:
+
+<<"mardiaTest slots", message=FALSE>>=
+result@p.value.skew
+result@p.value.kurt
+@
+
 \subsection{Henze-Zirkler's Multivariate Normality Test}
 
 The Henze-Zirkler test is based on a non-negative functional distance that measures the distance between two distribution functions. If the data is multivariate normal, the test statistic is approximately log-normally distributed. It proceeds to calculate the mean, variance and smoothness parameter. Then, mean and variance are log-normalized and the p-value is estimated. We can use \texttt{hzTest} function in the \texttt{MVN} package to calculate the Henze-Zirkler's Multivariate Normality Test \cite{trujillo2007a, henze1990,henze1997, johnson1992, mecklin2003}.
@@ -91,6 +105,20 @@ result
 Here, \texttt{HZ} is the value of Henze-Zirkler statistic at significance level $0.05$ and \texttt{p-value} is a p-value for the Henze-Zirkler's Multivariate Normality Test. 
 
 Since the p-value, which optain from the \texttt{hzTest}, lower than $0.05$, one can conclude that this multivariate data set deviates from multivariate normality.  
+
+\texttt{hzTest} function has an S4 class called \texttt{hz}. We can use \texttt{getSlots} function in order to get the slots in this S4 class.
+
+<<"hz slots", message=FALSE>>=
+getSlots("hz")
+@
+
+To access the informations which are stored in these slots, we can use \texttt{@} operator as follow:
+
+<<"hzTest slots", message=FALSE>>=
+result@HZ
+result@p.value
+@
+
 
 \subsection{Royston's Multivariate Normality Test}
 
@@ -105,6 +133,20 @@ Here, \texttt{H} is the value of Royston's H statistic at significance level \te
 
 According to the Royston's Multivariate Normality Test, the \emph{Iris} data set does not appear to follow a multivariate normal distribution $(p < 0.001)$.
 
+\texttt{roystonTest} function has an S4 class called \texttt{royston}. We can use \texttt{getSlots} function in order to get the slots in this S4 class.
+
+<<"royston slots", message=FALSE>>=
+getSlots("hz")
+@
+
+To access the informations which are stored in these slots, we can use \texttt{@} operator as follow:
+
+<<"roystonTest slots", message=FALSE>>=
+result@H
+result@p.value
+@
+
+
 \section{Multivariate Normality Plots}
 
 Our \texttt{MVN} package has ability to create three multivariate plots. We can use \texttt{qqplot = TRUE} option in the \texttt{mardiaTest}, \texttt{hzTest} and \texttt{roystonTest} functions to create a chi-suqare Q-Q plot. Furthermore, we can use \texttt{mvnPlot} function in our \texttt{MVN} package to create perspective and contour plots for binary data sets.
@@ -113,7 +155,7 @@ Our \texttt{MVN} package has ability to create three multivariate plots. We can 
 
 We can create a chi-square Q-Q plot for our \emph{Iris} data set to see whether there is any deviation from multivariate normality.
 
-<<"qq-plot", message=FALSE, fig.width = 5.8, fig.height = 5.8>>=
+<<"qq-plot", message=FALSE, fig.width = 6.5, fig.height = 6.5>>=
 result <- roystonTest(Iris, qqplot = TRUE)
 result
 @
@@ -125,7 +167,7 @@ If the data set follows approximately a multivariate normal distribution, the re
 
 We can use the \texttt{mvnPlot} function in the \texttt{MVN} package to create a perspective plot for a binary data set. In order to get a perspective plot, we should continue with two variables, i.e., bivariate normal distribution. As an example, we subset first 50 rows and \emph{sepal} measures of \emph{Iris}  data. Sepal measures of first 50 samples are bivariate normal. We can see that from the perspective plot.  Perspective plot produces 3-dimensional bell-shaped graph when data is bivariate normal. 
 
-<<"perspective plot", message=FALSE, fig.width = 5.8, fig.height = 5.8>>=
+<<"perspective plot", message=FALSE, fig.width = 6.5, fig.height = 6.5>>=
 Iris = iris[1:50, 1:2] 
 result = hzTest(Iris)
 mvnPlot(result, type = "persp", default = TRUE)
@@ -133,7 +175,7 @@ mvnPlot(result, type = "persp", default = TRUE)
 
 Another alternative is to use 2-dimensional contour graphs. We can use the \texttt{mvnPlot} function in the \texttt{MVN} package to create a contour plot for a binary data set.  Contour graphs are very useful since it gives information about normality and correlation at the same time. From contour graph below, we can say that there is a positive correlation among \emph{sepal} measures of flowers since contour lines lie around main diagonal.
 
-<<"contour plot", message=FALSE, fig.width = 5.8, fig.height = 5.8>>=
+<<"contour plot", message=FALSE, fig.width = 6.5, fig.height = 6.5>>=
 mvnPlot(result, type = "contour", default = TRUE)
 @
 

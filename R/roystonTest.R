@@ -51,11 +51,11 @@ function (data, qqplot = FALSE)
     }
     else {
         w <- shapiro.test(a2)$statistic
-    }
+         }
 }
                 z[i, 1] <- ((log(1 - w)) + g - m)/s
-            }
-        }
+           }
+    }
         else {
             stop("n is not in the proper range")
         }
