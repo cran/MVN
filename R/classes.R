@@ -1,5 +1,5 @@
 setClass("mardia",
-    slots = c(g1p = "numeric", skew="numeric", p.value.skew="numeric", small.skew="numeric",
+    representation(g1p = "numeric", skew="numeric", p.value.skew="numeric", small.skew="numeric",
         p.value.small="numeric", g2p="numeric", kurtosis="numeric", p.value.kurt="numeric", dname="character", dataframe="data.frame"))
 
 
@@ -19,14 +19,17 @@ definition = function(object) {
     cat("   kurtosis      :", object@kurtosis, "\n", sep = " ")
     cat("   p.value.kurt  :", object@p.value.kurt, "\n\n", sep = " ")
     cat("   small.skew    :", object@small.skew, "\n", sep = " ")
-    cat("   p.value.small :", object@p.value.small, "\n", sep = " ")
+    cat("   p.value.small :", object@p.value.small, "\n\n", sep = " ")
+    cat(if((object@p.value.skew > 0.05) & (object@p.value.kurt > 0.05)){"   Result        : Data is multivariate normal."}
+        else {"   Result        : Data is not multivariate normal."},"\n")
     cat("---------------------------------------", "\n\n", sep = " ")
+    
         invisible(NULL)
 })
 
 
 setClass("hz",
-slots = c(HZ = "numeric", p.value="numeric", dname="character", dataframe="data.frame"))
+representation(HZ = "numeric", p.value="numeric", dname="character", dataframe="data.frame"))
 
 
 setGeneric("hz", function(object) standardGeneric("hz"))
@@ -39,7 +42,9 @@ definition = function(object) {
     cat("---------------------------------------------", "\n", sep = " ")
     cat("  data :", object@dname, "\n\n", sep = " ")
     cat("  HZ      :", object@HZ, "\n", sep = " ")
-    cat("  p-value :", object@p.value, "\n", sep = " ")
+    cat("  p-value :", object@p.value, "\n\n", sep = " ")
+    cat(if(object@p.value > 0.05){"  Result  : Data is multivariate normal."}
+        else {"  Result  : Data is not multivariate normal."},"\n")
     cat("---------------------------------------------", "\n\n", sep = " ")
     invisible(NULL)
 })
@@ -47,7 +52,7 @@ definition = function(object) {
 
 
 setClass("royston",
-slots = c(H = "numeric", p.value="numeric", dname="character", dataframe="data.frame"))
+representation(H = "numeric", p.value="numeric", dname="character", dataframe="data.frame"))
 
 
 setGeneric("royston", function(object) standardGeneric("royston"))
@@ -60,7 +65,9 @@ definition = function(object) {
     cat("---------------------------------------------", "\n", sep = " ")
     cat("  data :", object@dname, "\n\n", sep = " ")
     cat("  H       :", object@H, "\n", sep = " ")
-    cat("  p-value :", object@p.value, "\n", sep = " ")
+    cat("  p-value :", object@p.value, "\n\n", sep = " ")
+    cat(if(object@p.value > 0.05){"  Result  : Data is multivariate normal."}
+        else {"  Result  : Data is not multivariate normal."},"\n")
     cat("---------------------------------------------", "\n\n", sep = " ")
     invisible(NULL)
 })

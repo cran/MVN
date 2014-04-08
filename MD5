@@ -1,15 +1,15 @@
-af75540ddda3ddd6ba0aaecd9aeea8e0 *DESCRIPTION
+743619bb4c96e26c4b12510dd5475d27 *DESCRIPTION
 6f9b9ca251581d5a177f79a2886bc6dd *NAMESPACE
-1e3f7eacf6747f37e4b0b2b0d40a9bf0 *R/classes.R
-856b28ac10007f13af2906941d9f4619 *R/hzTest.R
+4ab1389c35eed7efa536853556874ff8 *R/classes.R
+5dbdb9ac973a32e911fc3ab49b484e33 *R/hzTest.R
 4267e947d9cfd4bd15ebfe6a16ceee84 *R/mardiaTest.R
 5b124416f824c3d4009da5202769168e *R/mvnPlot.R
 bf0e87e5ae9a92ca671692f9c876f4f6 *R/roystonTest.R
 5b6535a4aac6b8376c27de13c6e7772c *build/vignette.rds
 b218e2259332d71b4c43f1136ebb403c *inst/doc/MVN.R
-4472b97ac9b5a5850a572c7fe7844bb0 *inst/doc/MVN.Rnw
-d929e23ed395a648380c3fe0c9499571 *inst/doc/MVN.pdf
-52a2bd57ae51721336ac4d2f686bda13 *man/MVN-package.Rd
+f05113a2df307a77529be6fc63916a3a *inst/doc/MVN.Rnw
+dc932c905d1c3126e36a9bc097ca942d *inst/doc/MVN.pdf
+7cb9ab1d85ac3336a7fef1b6b01f5b0d *man/MVN-package.Rd
 7367acc2b2ef61f9152b86dcbe3d71ce *man/hz-class.Rd
 3a24407ff5e5e0ce334f2eecdc6ef24a *man/hzTest.Rd
 a134eb56692dc995e302f9e297523eb5 *man/mardia-class.Rd
@@ -17,4 +17,4 @@ e10d27b8afd6892c6264ffaa683718eb *man/mardiaTest.Rd
 ea5a854732de835f23b0290cf097a20e *man/mvnPlot.Rd
 707078961e9c53acfcc99e790b87b3b3 *man/royston-class.Rd
 d1601bf111212d9828a38f911352a13a *man/roystonTest.Rd
-4472b97ac9b5a5850a572c7fe7844bb0 *vignettes/MVN.Rnw
+f05113a2df307a77529be6fc63916a3a *vignettes/MVN.Rnw

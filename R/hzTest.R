@@ -54,7 +54,6 @@ function (data, cov = TRUE, qqplot = FALSE)
         
         
         
-        
         if (qqplot){    
             d <- Dj    
             r <- rank(d)  

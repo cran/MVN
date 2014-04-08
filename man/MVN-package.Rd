@@ -1,5 +1,6 @@
 \name{MVN-package}
 \alias{MVN-package}
+\alias{MVN}
 
 \docType{package}
 \title{
