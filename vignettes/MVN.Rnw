@@ -11,7 +11,7 @@
 \author{Selcuk Korkmaz$^1$ and Dincer Goksuluk\\[0.35cm]
 \small{Hacettepe University, Faculty of Medicine, Department of Biostatistics, Ankara, TURKEY}\\[0cm]\texttt{\small{$^1$selcuk.korkmaz@hacettepe.edu.tr}}
 } 
-\date{\texttt{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2014-04-08)}
+\date{\texttt{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2014-04-26)}
 
 \begin{document}
 
@@ -74,14 +74,30 @@ Mardia's test is based on multivariate extensions of \emph{skewness} and \emph{k
 result <- mardiaTest(Iris, cov = TRUE, qqplot = FALSE)
 result
 @
- 
-Here, \texttt{g1p}: Mardia's estimation of multivariate skew, \texttt{skew}: Mardia's skew statistic, \texttt{p.value.skew}: p-value of skew statistic, \texttt{g2p}: Mardia's g2p estimate of multivariate kurtosis, \texttt{kurtosis}: Mardia's multivariate kurtosis statistic, \texttt{p.value.kurt}: p-value of kurtosis statistic, \texttt{small.skew}: Mardia's small sample skew statistic and \texttt{p.value.small}: p-value of small sample skew statistic.
+
+Here:
+
+  \texttt{g1p}: Mardia's estimation of multivariate skewness, 
+  
+  \texttt{chi.skew}: Chi-square value of the skewness statistic,
+  
+  \texttt{p.value.skew}: Significance value of skewness statistic,
+  
+  \texttt{g2p}: Mardia's estimation of multivariate kurtosis,
+  
+  \texttt{z.kurtosis}: z value of the kurtosis statistic,
+  
+  \texttt{p.value.kurt}: Significance value of kurtosis statistic,
+  
+  \texttt{chi.small.skew}: Chi-square value of the small sample skewness statistic,
+  
+  \texttt{p.value.small}: Significance value of small sample skewness statistic.\\
+
 
 As seen above results, both skewness $(p=0.1772)$ and kurtosis  $(p=0.1953)$ values indicate multivariate normality.
 
 \texttt{mardiaTest} function has an S4 class called \texttt{mardia}. We can use \texttt{getSlots} function in order to get the slots in this S4 class.
 
-\newpage
 <<"mardia slots", message=FALSE>>=
 getSlots("mardia")
 @
@@ -155,7 +171,7 @@ Our \texttt{MVN} package has ability to create three multivariate plots. We can 
 
 We can create a chi-square Q-Q plot for our \emph{Iris} data set to see whether there is any deviation from multivariate normality.
 
-<<"qq-plot", message=FALSE, fig.width = 6.5, fig.height = 6.5>>=
+<<"qq-plot", message=FALSE, fig.width = 5, fig.height = 5>>=
 result <- roystonTest(Iris, qqplot = TRUE)
 result
 @
@@ -173,11 +189,13 @@ result = hzTest(Iris)
 mvnPlot(result, type = "persp", default = TRUE)
 @
 
-Another alternative is to use 2-dimensional contour graphs. We can use the \texttt{mvnPlot} function in the \texttt{MVN} package to create a contour plot for a binary data set.  Contour graphs are very useful since it gives information about normality and correlation at the same time. From contour graph below, we can say that there is a positive correlation among \emph{sepal} measures of flowers since contour lines lie around main diagonal.
+Another alternative is to use 2-dimensional contour graphs. We can use the \texttt{mvnPlot} function in the \texttt{MVN} package to create a contour plot for a binary data set.  Contour graphs are very useful since it gives information about normality and correlation at the same time. 
 
 <<"contour plot", message=FALSE, fig.width = 6.5, fig.height = 6.5>>=
 mvnPlot(result, type = "contour", default = TRUE)
 @
+
+From contour graph above, we can say that there is a positive correlation among \emph{sepal} measures of flowers since contour lines lie around main diagonal.
 
 \newpage
 \section{Session info}

@@ -23,17 +23,20 @@ if \code{TRUE} it creates a chi-square Q-Q plot
 }
 }
 \details{
-Calculates the Mardia's multivariate skewness and kurtosis coefficients as well as their corresponding statistical tests. For large sample size the multivariate skewness is asymptotically distributed as a Chi-square random variable; here it is corrected for small sample size. Likewise, the multivariate kurtosis it is distributed as a unit-normal.
+This function calculate the Mardia's multivariate skewness and kurtosis coefficients as well as their corresponding statistical significance. It can also calculate corrected version of skewness coefficient for small sample size (n< 20).
 
+For multivariate normality, both p-values of skewness and kurtosis statistics should be greater than \code{0.05}. 
+
+If sample size less than 20 then \code{p.value.small} should be used as significance value of skewness instead of \code{p.value.skew}.
 }
 \value{
-\item{g1p}{Mardia's \code{g1p} estimate of multivariate skew}
-\item{skew}{Mardia's skew statistic}
-\item{p.value.skew }{\code{p-value} of skew statistic}
-\item{g2p}{Mardia's \code{g2p} estimate of multivariate kurtosis}
-\item{kurtosis}{Mardia's multivariate kurtosis statistic}
+\item{g1p}{Mardia's multivariate skewness statistic}
+\item{chi.skew}{Chi-square value of the skewness statistic}
+\item{p.value.skew }{\code{p-value} of the skewness statistic}
+\item{g2p}{Mardia's multivariate kurtosis statistic}
+\item{z.kurtosis}{z value of the kurtosis statistic}
 \item{p.value.kurt}{\code{p-value} of kurtosis statistic}
-\item{small.skew}{Mardia's small sample skew statistic}
+\item{chi.small.skew}{Chi-square value of the small sample skewness statistic}
 \item{p.value.small}{\code{p-value} of small sample skew statistic}
 }
 \references{

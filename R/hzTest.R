@@ -1,5 +1,5 @@
 hzTest <-
-function (data, cov = TRUE, qqplot = FALSE) 
+function (data, cov = TRUE, qqplot = FALSE)
     {
         dataframe=as.data.frame(data)
         dname <- deparse(substitute(data))

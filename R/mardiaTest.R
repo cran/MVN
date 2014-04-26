@@ -34,9 +34,9 @@ function (data, cov = TRUE, qqplot = FALSE)
                  xlab = "Chi-Square Quantile", ylab = "Squared Mahalanobis Distance")
             abline(0, 1, lwd = 2, col = "black")
         }
-        result <- new("mardia", g1p = g1p, skew = skew, p.value.skew = p.skew,
-                      small.skew = small.skew, p.value.small = p.small, g2p = g2p, 
-                      kurtosis = kurt, p.value.kurt = p.kurt, dname = dname, dataframe = dataframe)
+        result <- new("mardia", g1p = g1p, chi.skew = skew, p.value.skew = p.skew,
+                      chi.small.skew = small.skew, p.value.small = p.small, g2p = g2p,
+                      z.kurtosis = kurt, p.value.kurt = p.kurt, dname = dname, dataframe = dataframe)
         
         result
     }

@@ -65,7 +65,7 @@ result@H
 result@p.value
 
 
-## ----"qq-plot", message=FALSE, fig.width = 6.5, fig.height = 6.5---------
+## ----"qq-plot", message=FALSE, fig.width = 5, fig.height = 5-------------
 result <- roystonTest(Iris, qqplot = TRUE)
 result
 
