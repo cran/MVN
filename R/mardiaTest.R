@@ -30,8 +30,8 @@ function (data, cov = TRUE, qqplot = FALSE)
             d <- diag(D)
             r <- rank(d)
             chi2q <- qchisq((r - 0.5)/n, p)
-            plot(chi2q, d, pch = 19, main = "Chi-Square Q-Q Plot", 
-                 xlab = "Chi-Square Quantile", ylab = "Squared Mahalanobis Distance")
+            plot(d, chi2q, pch = 19, main = "Chi-Square Q-Q Plot",
+                 xlab = "Squared Mahalanobis Distance", ylab = "Chi-Square Quantile")
             abline(0, 1, lwd = 2, col = "black")
         }
         result <- new("mardia", g1p = g1p, chi.skew = skew, p.value.skew = p.skew,

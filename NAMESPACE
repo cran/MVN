@@ -5,10 +5,14 @@ import(MASS)
 import(nortest)
 import(moments)
 
+importFrom(robustbase, covMcd)
+import(mvoutlier)
+
 export(hzTest)
 export(mardiaTest)
 export(roystonTest)
 export(mvnPlot)
+export(mvOutlier)
 
 exportClasses("hz")
 exportClasses("mardia")

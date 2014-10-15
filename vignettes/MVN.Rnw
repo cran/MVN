@@ -11,9 +11,17 @@
 \author{Selcuk Korkmaz$^1$ and Dincer Goksuluk\\[0.35cm]
 \small{Hacettepe University, Faculty of Medicine, Department of Biostatistics, Ankara, TURKEY}\\[0cm]\texttt{\small{$^1$selcuk.korkmaz@hacettepe.edu.tr}}
 } 
-\date{\texttt{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2014-04-26)}
+\date{\texttt{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2014-10-15)}
 
 \begin{document}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
 
 
 \maketitle
@@ -196,6 +204,59 @@ mvnPlot(result, type = "contour", default = TRUE)
 @
 
 From contour graph above, we can say that there is a positive correlation among \emph{sepal} measures of flowers since contour lines lie around main diagonal.
+
+\section{Multivariate Outlier Detection}
+
+There are two multivariate outlier detection methods which are based on Mahalanobis distance in the \texttt{MVN} package.
+
+\subsection{Mahalanobis Distance}
+
+This methodology has following steps:
+
+\begin{enumerate}
+\item[1] Compute robust Mahalanobis distances (MD(xi))
+\item[2] Compute the 97.5 percent-Quantile Q of the Chi-Square distribution
+\item[3] Declare MD(xi) $>$ Q as possible outlier
+\end{enumerate}
+ 
+
+For this task \texttt{mvnPlot} function can be used as follows: 
+
+<<"Mahalanobis", message=FALSE>>=
+Iris = iris[1:50, 1:3]
+result <- mvOutlier(Iris, qqplot = FALSE, method="quan")
+head(result$outlier)
+head(result$newData)
+@
+
+Here, user can get outlier set based on Mahalanobis distance and data set without outliers.
+
+\subsection{Adjusted Mahalanobis Distance}
+
+This methodology has following steps:
+
+\begin{enumerate}
+\item[1] Compute robust Mahalanobis distances (MD(xi))
+\item[2] Compute the 97.5 percent Adjsuted Quantile (AQ) of the Chi-Square distribution
+\item[3] Declare MD(xi) $>$ AQ as possible outlier
+\end{enumerate}
+
+Likewise, \texttt{mvnPlot} function can be used as follows: 
+
+<<"Adjusted Mahalanobis", message=FALSE>>=
+result <- mvOutlier(Iris, qqplot = FALSE, method="adj.quan")
+head(result$outlier)
+head(result$newData)
+@
+
+Here, user can get outlier set based on adjusted Mahalanobis distance and data set without outliers.
+
+A Q-Q plot can be created with using \texttt{qqplot = TRUE} option in the \texttt{mvOutlier} function for visual inspection.
+
+<<"qq plot outlier", message=FALSE, fig.width = 5, fig.height = 5>>=
+result <- mvOutlier(Iris, qqplot = TRUE, method="adj.quan")
+@
+
 
 \newpage
 \section{Session info}
