@@ -60,12 +60,12 @@ result@p.value
 result <- roystonTest(Iris, qqplot = TRUE)
 result
 
-## ----"perspective plot", message=FALSE, fig.width = 6.5, fig.height = 6.5----
+## ----"perspective_plot", message=FALSE, fig.width = 6.5, fig.height = 6.5----
 Iris = iris[1:50, 1:2] 
 result = hzTest(Iris)
 mvnPlot(result, type = "persp", default = TRUE)
 
-## ----"contour plot", message=FALSE, fig.width = 6.5, fig.height = 6.5----
+## ----"contour_plot", message=FALSE, fig.width = 6.5, fig.height = 6.5----
 mvnPlot(result, type = "contour", default = TRUE)
 
 ## ----"Mahalanobis", message=FALSE----------------------------------------
@@ -74,14 +74,14 @@ result <- mvOutlier(Iris, qqplot = FALSE, method="quan")
 head(result$outlier)
 head(result$newData)
 
-## ----"Adjusted Mahalanobis", message=FALSE-------------------------------
+## ----"Adjusted_Mahalanobis", message=FALSE-------------------------------
 result <- mvOutlier(Iris, qqplot = FALSE, method="adj.quan")
 head(result$outlier)
 head(result$newData)
 
-## ----"qq plot outlier", message=FALSE, fig.width = 5, fig.height = 5-----
+## ----"qq_plot_outlier", message=FALSE, fig.width = 5, fig.height = 5-----
 result <- mvOutlier(Iris, qqplot = TRUE, method="adj.quan")
 
-## ----"Session info"------------------------------------------------------
+## ----"Session_info"------------------------------------------------------
 sessionInfo()
 
