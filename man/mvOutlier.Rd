@@ -29,18 +29,18 @@ if \code{TRUE} it creates a chi-square Q-Q plot
 }
 
 \author{
-Selcuk Korkmaz <\email{selcuk.korkmaz@hacettepe.edu.tr}> and Dincer Goksuluk <\email{dincer.goksuluk@hacettepe.edu.tr}>
+Selcuk Korkmaz, Dincer Goksuluk, Gokmen Zararsiz
 }
 
 
 \seealso{
-\code{\link[MVN]{mardiaTest}} \code{\link[MVN]{roystonTest}} \code{\link[MVN]{hzTest}} \code{\link[MVN]{mvnPlot}}
+\code{\link[MVN]{mardiaTest}} \code{\link[MVN]{roystonTest}} \code{\link[MVN]{hzTest}} \code{\link[MVN]{mvnPlot}} \code{\link[MVN]{uniPlot}} \code{\link[MVN]{uniNorm}}
 }
 
 
 \examples{
-Iris = iris[1:50, 1:3] # Iris data only for setosa and three variables
-result = mvOutlier(Iris, qqplot = TRUE, method = "quan")
+setosa = iris[1:50, 1:3] # Iris data only for setosa and three variables
+result = mvOutlier(setosa, qqplot = TRUE, method = "quan")
 result
 }
 

@@ -1,12 +1,19 @@
 exportPattern("^[[:alpha:]]+")
 
 import(methods)
-import(MASS)
-import(nortest)
-import(moments)
 
+importFrom(plyr, ldply)
+importFrom(moments, kurtosis)
+importFrom(nortest, sf.test)
+importFrom(nortest, cvm.test)
+importFrom(nortest, lillie.test)
+importFrom(nortest, ad.test)
 importFrom(robustbase, covMcd)
-import(mvoutlier)
+importFrom(MASS, kde2d)
+importFrom(graphics, persp)
+importFrom(graphics, contour)
+importFrom(stats, mahalanobis)
+importFrom(mvoutlier, arw)
 
 export(hzTest)
 export(mardiaTest)

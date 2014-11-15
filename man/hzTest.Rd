@@ -46,14 +46,14 @@ Mecklin, C. J. and Mundfrom, D. J. (2003), On Using Asymptotic Critical Values i
 
 }
 \author{
-Selcuk Korkmaz <\email{selcuk.korkmaz@hacettepe.edu.tr}> and Dincer Goksuluk <\email{dincer.goksuluk@hacettepe.edu.tr}>
+Selcuk Korkmaz, Dincer Goksuluk, Gokmen Zararsiz
 }
 
 \seealso{
-\code{\link[MVN]{roystonTest}} \code{\link[MVN]{mardiaTest}} \code{\link[MVN]{mvnPlot}}
+\code{\link[MVN]{roystonTest}} \code{\link[MVN]{mardiaTest}} \code{\link[MVN]{mvnPlot}} \code{\link[MVN]{mvOutlier}} \code{\link[MVN]{uniPlot}} \code{\link[MVN]{uniNorm}}
 }
 \examples{
-Iris = iris[1:50, 1:4] # Iris data only for setosa and four variables
-result = hzTest(Iris, qqplot = TRUE)
+setosa = iris[1:50, 1:4] # Iris data only for setosa and four variables
+result = hzTest(setosa, qqplot = TRUE)
 result
 }

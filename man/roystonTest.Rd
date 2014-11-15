@@ -45,15 +45,14 @@ Shapiro, S. and Wilk, M. (1965). An analysis of variance test for normality. Bio
 Trujillo-Ortiz, A., R. Hernandez-Walls, K. Barba-Rojo and L. Cupul-Magana. (2007). Roystest:Royston's Multivariate Normality Test. A MATLAB file. URL \url{http://www.mathworks.com/matlabcentral/fileexchange/17811}
 }
 \author{
-Selcuk Korkmaz <\email{selcuk.korkmaz@hacettepe.edu.tr}> and Dincer Goksuluk <\email{dincer.goksuluk@hacettepe.edu.tr}>
-
+Selcuk Korkmaz, Dincer Goksuluk, Gokmen Zararsiz
 }
 
 \seealso{
-\code{\link[MVN]{hzTest}} \code{\link[MVN]{mardiaTest}} \code{\link[MVN]{mvnPlot}}
+\code{\link[MVN]{hzTest}} \code{\link[MVN]{mardiaTest}} \code{\link[MVN]{mvnPlot}} \code{\link[MVN]{mvOutlier}} \code{\link[MVN]{uniPlot}} \code{\link[MVN]{uniNorm}}
 }
 \examples{
-Iris = iris[1:50, 1:4] # Iris data only for setosa and four variables
-result = roystonTest(Iris, qqplot = TRUE)
+setosa = iris[1:50, 1:4] # Iris data only for setosa and four variables
+result = roystonTest(setosa, qqplot = TRUE)
 result
 }

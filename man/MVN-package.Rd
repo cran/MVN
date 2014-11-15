@@ -16,7 +16,7 @@ Type: \tab Package\cr
 License: \tab GPL (>= 2)\cr
 }}
 \author{
-Selcuk Korkmaz and Dincer Goksuluk
+Selcuk Korkmaz, Dincer Goksuluk, Gokmen Zararsiz
 
 Maintainer: Selcuk Korkmaz <selcuk.korkmaz@hacettepe.edu.tr>
 

@@ -50,14 +50,14 @@ Stevens, J. (1992), Applied Multivariate Statistics for Social Sciences. 2nd. ed
 
 }
 \author{
-Selcuk Korkmaz <\email{selcuk.korkmaz@hacettepe.edu.tr}> and Dincer Goksuluk <\email{dincer.goksuluk@hacettepe.edu.tr}>
+Selcuk Korkmaz, Dincer Goksuluk, Gokmen Zararsiz
 }
 
 \seealso{
-\code{\link[MVN]{roystonTest}} \code{\link[MVN]{hzTest}} \code{\link[MVN]{mvnPlot}}
+\code{\link[MVN]{roystonTest}} \code{\link[MVN]{hzTest}} \code{\link[MVN]{mvnPlot}} \code{\link[MVN]{mvOutlier}} \code{\link[MVN]{uniPlot}} \code{\link[MVN]{uniNorm}}
 }
 \examples{
-Iris = iris[1:50, 1:4] # Iris data only for setosa and four variables
-result = mardiaTest(Iris, qqplot = TRUE)
+setosa = iris[1:50, 1:4] # Iris data only for setosa and four variables
+result = mardiaTest(setosa, qqplot = TRUE)
 result
 }

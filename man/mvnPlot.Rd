@@ -31,7 +31,7 @@ After set the \code{default=FALSE} option, users can define their own plot setti
 }	
 
 \author{
-Selcuk Korkmaz <\email{selcuk.korkmaz@hacettepe.edu.tr}> and Dincer Goksuluk <\email{dincer.goksuluk@hacettepe.edu.tr}>
+Selcuk Korkmaz, Dincer Goksuluk, Gokmen Zararsiz
 }
 \note{
 Please be careful that this function creates perspective and contour plots when there are only two variables.
@@ -39,11 +39,11 @@ Please be careful that this function creates perspective and contour plots when 
 
 
 \seealso{
-\code{\link[MVN]{roystonTest}} \code{\link[MVN]{hzTest}} \code{\link[MVN]{mardiaTest}}
+\code{\link[MVN]{roystonTest}} \code{\link[MVN]{hzTest}} \code{\link[MVN]{mardiaTest}} \code{\link[MVN]{mvOutlier}} \code{\link[MVN]{uniPlot}} \code{\link[MVN]{uniNorm}}
 }
 \examples{
-Iris = iris[1:50, 1:2] # Iris data only for setosa and two variables
-result = hzTest(Iris)
+setosa = iris[1:50, 1:2] # Iris data only for setosa and two variables
+result = hzTest(setosa)
 ### Perspective Plot ### 
 mvnPlot(result, type = "persp", default = TRUE)
 ### Contour Plot ### 
