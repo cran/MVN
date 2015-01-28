@@ -37,5 +37,5 @@ Selcuk Korkmaz, Dincer Goksuluk, Gokmen Zararsiz
 }
 \examples{
 setosa = iris[1:50, 1:4] # Iris data only for setosa and four variables
-uniPlot(setosa, type="qqplot")
+uniPlot(setosa, type = "qqplot")
 }

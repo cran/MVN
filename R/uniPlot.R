@@ -3,12 +3,14 @@ uniPlot <- function(data, type = c("qqplot","histogram","box","scatter"), mfrow 
   type = match.arg(type)
   
   if (is.data.frame(data) || is.matrix(data)){
+    data = as.data.frame(data)
     if (nrow(data) < 2) stop(warning("Too few number of observations (n < 2)."))
     if (is.null(colnames(data))) varNames = paste("Column",1:ncol(data),sep="")
     if (!is.null(colnames(data))) varNames = colnames(data)
     
     if (is.null(mfrow)){
-      nCol = nRow = ceiling(sqrt(ncol(data)))      
+      nCol = ceiling(sqrt(ncol(data)))   
+      nRow = ceiling(ncol(data) / nCol)
     }
     
     if (type != "box"){
@@ -32,6 +34,7 @@ uniPlot <- function(data, type = c("qqplot","histogram","box","scatter"), mfrow 
     }
     
     if (type == "scatter"){
+      if(nrow(data) == 1 || ncol(data) == 1) stop(warning("Not available for univariate input."))
       plot(data, ...)
     }
     
@@ -41,8 +44,9 @@ uniPlot <- function(data, type = c("qqplot","histogram","box","scatter"), mfrow 
     }
   }
     
-  if (is.numeric(data)){
+  if (is.null(ncol(data)) || is.null(nrow(data))){
     par(mfrow=c(1,1))
+    data = as.numeric(data)
     if (type == "histogram"){
       hist(data, freq=FALSE, main="", ...) 
       curve(dnorm(x, mean = mean(data), sd = sd(data)), col="red", add=TRUE)

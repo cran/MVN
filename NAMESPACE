@@ -14,6 +14,8 @@ importFrom(graphics, persp)
 importFrom(graphics, contour)
 importFrom(stats, mahalanobis)
 importFrom(mvoutlier, arw)
+importFrom(psych, describe)
+
 
 export(hzTest)
 export(mardiaTest)

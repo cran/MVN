@@ -22,12 +22,12 @@ definition = function(object) {
     cat("   chi.small.skew :", object@chi.small.skew, "\n", sep = " ")
     cat("   p.value.small  :", object@p.value.small, "\n\n", sep = " ")
     if(n>=20){
-    cat(if((object@p.value.skew > 0.05) & (object@p.value.kurt > 0.05)){"   Result         : Data is multivariate normal."}
-        else {"   Result          : Data is not multivariate normal."},"\n")
+    cat(if((object@p.value.skew > 0.05) & (object@p.value.kurt > 0.05)){"   Result         : Data are multivariate normal."}
+        else {"   Result          : Data are not multivariate normal."},"\n")
     }
     if(n<20){
-        cat(if((object@p.value.small > 0.05) & (object@p.value.kurt > 0.05)){"   Result         : Data is multivariate normal."}
-        else {"   Result          : Data is not multivariate normal."},"\n")
+        cat(if((object@p.value.small > 0.05) & (object@p.value.kurt > 0.05)){"   Result         : Data are multivariate normal."}
+        else {"   Result          : Data are not multivariate normal."},"\n")
     }
     cat("---------------------------------------", "\n\n", sep = " ")
     
@@ -50,8 +50,8 @@ definition = function(object) {
     cat("  data :", object@dname, "\n\n", sep = " ")
     cat("  HZ      :", object@HZ, "\n", sep = " ")
     cat("  p-value :", object@p.value, "\n\n", sep = " ")
-    cat(if(object@p.value > 0.05){"  Result  : Data is multivariate normal."}
-        else {"  Result  : Data is not multivariate normal."},"\n")
+    cat(if(object@p.value > 0.05){"  Result  : Data are multivariate normal."}
+        else {"  Result  : Data are not multivariate normal."},"\n")
     cat("---------------------------------------------", "\n\n", sep = " ")
     invisible(NULL)
 })
@@ -73,8 +73,8 @@ definition = function(object) {
     cat("  data :", object@dname, "\n\n", sep = " ")
     cat("  H       :", object@H, "\n", sep = " ")
     cat("  p-value :", object@p.value, "\n\n", sep = " ")
-    cat(if(object@p.value > 0.05){"  Result  : Data is multivariate normal."}
-        else {"  Result  : Data is not multivariate normal."},"\n")
+    cat(if(object@p.value > 0.05){"  Result  : Data are multivariate normal."}
+        else {"  Result  : Data are not multivariate normal."},"\n")
     cat("---------------------------------------------", "\n\n", sep = " ")
     invisible(NULL)
 })

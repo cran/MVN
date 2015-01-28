@@ -7,7 +7,7 @@
 Performs several multivariate normality tests.
 }
 \description{
-Assessing the assumption of multivariate normality is required by many parametric multivariate statistical methods, such as discriminant analysis, principal component analysis, MANOVA, etc. Here, we present an R package to asses multivariate normality. The MVN package contains three most widely used multivariate normality tests, including Mardia's, Henze-Zirkler's and Royston's multivariate normality tests. 
+Performs multivariate normality tests and graphical approaches and implements multivariate outlier detection and univariate normality of marginal distributions through plots and tests.
 }
 \details{
 \tabular{ll}{
