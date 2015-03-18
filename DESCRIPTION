@@ -1,8 +1,8 @@
 Package: MVN
 Type: Package
 Title: Multivariate Normality Tests
-Version: 3.8
-Date: 2015-01-28
+Version: 3.9
+Date: 2015-03-18
 Authors@R: c(person("Selcuk", "Korkmaz", role = c("aut", "cre"),
                      email = "selcuk.korkmaz@hacettepe.edu.tr"),
               person("Dincer", "Goksuluk", role = "aut",
@@ -22,7 +22,7 @@ Collate: classes.R mardiaTest.R hzTest.R roystonTest.R mvOutlier.R
         mvnPlot.R uniNorm.R uniPlot.R
 Description: Performs multivariate normality tests and graphical approaches and implements multivariate outlier detection and univariate normality of marginal distributions through plots and tests. 
 License: GPL (>= 2)
-Packaged: 2015-01-28 10:45:44 UTC; dncr
+Packaged: 2015-03-18 15:27:49 UTC; dncr
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2015-01-28 12:18:09
+Date/Publication: 2015-03-18 18:01:27

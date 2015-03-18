@@ -1,6 +1,10 @@
 roystonTest <-
-function (data, qqplot = FALSE) 
+function (data, qqplot = FALSE)
     {
+        if (dim(data)[2] < 2 || is.null(dim(data))) {stop("number of variables must be equal or greater than 2")}
+        
+        if (!is.data.frame(data) && !is.matrix(data)) stop('Input must be one of classes \"data frame\" or \"matrix\"')
+        
         dataframe=as.data.frame(data)
         dname <- deparse(substitute(data))
         data <- as.matrix(data)

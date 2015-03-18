@@ -1,7 +1,11 @@
 mvOutlier <-
-function (data, qqplot=TRUE, method = c("quan", "adj.quan"))
+function (data, qqplot = TRUE, alpha = 0.5, method = c("quan", "adj.quan"))
 {
     
+        if (!is.data.frame(data) && !is.matrix(data)) stop('Input must be one of classes \"data frame\" or \"matrix\"')
+  
+        if (dim(data)[2] < 2 || is.null(dim(data))) {stop("number of variables must be equal or greater than 2")}
+  
         dataframe=as.data.frame(data)
         dname <- deparse(substitute(data))
         method <- match.arg(method)
@@ -11,7 +15,7 @@ function (data, qqplot=TRUE, method = c("quan", "adj.quan"))
         
     
         
-        covr <- covMcd(data, alpha = 0.5)
+        covr <- covMcd(data, alpha = alpha)
         mah <- mahalanobis(data, center = covr$center, cov = covr$cov)
         d <- mah
         sortMah <- data.frame(sort(mah, decreasing = TRUE)) # sorted Mahalanobis' distances in increasing order

@@ -8,7 +8,7 @@ Multivariate Outlier Detection
 This function detects multivariate outliers based on Mahalanobis distance and adjusted Mahalanobis distance.
 }
 \usage{
-mvOutlier(data, qqplot = TRUE, method = c("quan", "adj.quan"))
+mvOutlier(data, qqplot = TRUE, alpha = 0.5, method = c("quan", "adj.quan"))
 }
 
 \arguments{
@@ -17,6 +17,10 @@ a numeric matrix or data frame
 }
   \item{qqplot}{
 if \code{TRUE} it creates a chi-square Q-Q plot
+}
+
+ \item{alpha}{
+a numeric parameter controlling the size of the subsets over which the determinant is minimized. Allowed values for the alpha are between 0.5 and 1 and the default is 0.5. 
 }
   \item{method}{
 \code{quan} for Mahalanobis distance and \code{adj.quan} for adjusted Mahalanobis distance. 
