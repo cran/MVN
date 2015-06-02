@@ -1,10 +1,11 @@
 mvOutlier <-
-function (data, qqplot = TRUE, alpha = 0.5, method = c("quan", "adj.quan"))
+function (data, qqplot = TRUE, alpha = 0.5, tol = 1e-25, method = c("quan", "adj.quan"), label = TRUE, position = NULL, offset = 0.5)
 {
     
         if (!is.data.frame(data) && !is.matrix(data)) stop('Input must be one of classes \"data frame\" or \"matrix\"')
   
         if (dim(data)[2] < 2 || is.null(dim(data))) {stop("number of variables must be equal or greater than 2")}
+        
   
         dataframe=as.data.frame(data)
         dname <- deparse(substitute(data))
@@ -16,12 +17,12 @@ function (data, qqplot = TRUE, alpha = 0.5, method = c("quan", "adj.quan"))
     
         
         covr <- covMcd(data, alpha = alpha)
-        mah <- mahalanobis(data, center = covr$center, cov = covr$cov)
+        mah <- mahalanobis(data, center = covr$center, cov = covr$cov, tol = tol)
         d <- mah
         sortMah <- data.frame(sort(mah, decreasing = TRUE)) # sorted Mahalanobis' distances in increasing order
         
-        out <-  cbind(round(sortMah,3), NA)
-        colnames(out) <- c("MD", "Outlier")
+        out <-  cbind(rownames(sortMah),round(sortMah,3), NA)
+        colnames(out) <- c("Observation","Mahalanobis Distance", "Outlier")
 
         
         if (method=="adj.quan"){
@@ -30,11 +31,11 @@ function (data, qqplot = TRUE, alpha = 0.5, method = c("quan", "adj.quan"))
             for(i in 1:n){
                 {
                 if (sortMah[i,] > crt){
-                    out[i,2] <- "TRUE"
+                    out[i,3] <- "TRUE"
                     
                 } else
                 {
-                    out[i,2] <- "FALSE"
+                    out[i,3] <- "FALSE"
                 }}
             }
             
@@ -53,12 +54,19 @@ function (data, qqplot = TRUE, alpha = 0.5, method = c("quan", "adj.quan"))
                 plot(d, chi2q , pch = 16, main = "Adjusted Chi-Square Q-Q Plot",
                 xlab = "Robust Squared Mahalanobis Distance",ylab="Chi-Square Quantile", col=colors)
                 abline(v=crt, lwd = 2, col = "blue")
-                tbl = table(out[,2])
+                tbl = table(out[,3])
                 
                 legend("topleft",legend=c(paste("Outliers (n=",if(is.na(tbl[2])) 0 else tbl[2],")",sep=""),paste("Non-outliers (n=",if(is.na(tbl[1])) 0 else tbl[1],")",sep="")),
                 col=c("red","black"), pch=16, bty="n",)
+                
+                if(label && is.element("TRUE", out[, 3])) {
+                    labelOutlier <- rownames(out)[out[,3] == TRUE]
+                    xCoord <- out[out[,3] == TRUE,2]
+                    yCoord <- sort(chi2q,decreasing = T)[1:length(xCoord)]
+                    text(xCoord, yCoord, labelOutlier, pos = position, offset = offset)
+                 }
 
-		if (max(d) >= crt) {text(crt-0.2,2,paste("Quantile: ", round(crt,3)),srt=90,pos=3, col="blue")}
+		if (max(d) >= crt) {text(crt-0.2,2,paste("Quantile: ", round(crt,3)), srt=90, pos=3, col="blue")}
             }
                       
             newData <- out[out$Outlier %in% "FALSE",]
@@ -77,11 +85,11 @@ function (data, qqplot = TRUE, alpha = 0.5, method = c("quan", "adj.quan"))
             for(i in 1:n){
                 {
                     if (sortMah[i,] > chiSq){
-                        out[i,2] <- "TRUE"
+                        out[i,3] <- "TRUE"
                         
                     } else
                     {
-                        out[i,2] <- "FALSE"
+                        out[i,3] <- "FALSE"
                     }}
             }
             
@@ -89,6 +97,7 @@ function (data, qqplot = TRUE, alpha = 0.5, method = c("quan", "adj.quan"))
                 d <- mah
                 r <- rank(d)
                 chi2q <- qchisq((r-0.5)/n,p)
+                
                 
                 colors = NULL
                 for (i in 1:n) {
@@ -99,12 +108,19 @@ function (data, qqplot = TRUE, alpha = 0.5, method = c("quan", "adj.quan"))
                 xlab = "Robust Squared Mahalanobis Distance",ylab="Chi-Square Quantile")
                 abline(v=chiSq, lwd = 2, col = "red")
                 
-                tbl = table(out[,2])
+                tbl = table(out[,3])
                 
                 legend("topleft",legend=c(paste("Outliers (n=",if(is.na(tbl[2])) 0 else tbl[2],")",sep=""),paste("Non-outliers (n=",if(is.na(tbl[1])) 0 else tbl[1],")",sep="")),
                 col=c("red","black"), pch=16, bty="n",)
                 
-		if (max(d) >= chiSq) {text(chiSq-0.2,2,paste("Quantile: ", round(chiSq,3)),srt=90,pos=3, col="red")}
+                if(label && is.element("TRUE", out[, 3])) {
+                     labelOutlier <- rownames(out)[out[,3] == TRUE]
+                     xCoord <- out[out[,3] == TRUE,2]
+                     yCoord <- sort(chi2q,decreasing = T)[1:length(xCoord)]
+                     text(xCoord, yCoord, labelOutlier, pos = position, offset = offset)
+                }
+                
+		if (max(d) >= chiSq) {text(chiSq-0.2,2,paste("Quantile: ", round(chiSq,3)),srt = 90, pos = 3, col="red")}
             }
 
             
