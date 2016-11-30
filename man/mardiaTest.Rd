@@ -28,6 +28,8 @@ This function calculate the Mardia's multivariate skewness and kurtosis coeffici
 For multivariate normality, both p-values of skewness and kurtosis statistics should be greater than \code{0.05}. 
 
 If sample size less than 20 then \code{p.value.small} should be used as significance value of skewness instead of \code{p.value.skew}.
+
+If there are missing values in the data, a listwise deletion will be applied and a complete-case analysis will be performed.
 }
 \value{
 \item{g1p}{Mardia's multivariate skewness statistic}
@@ -40,6 +42,8 @@ If sample size less than 20 then \code{p.value.small} should be used as signific
 \item{p.value.small}{\code{p-value} of small sample skew statistic}
 }
 \references{
+Korkmaz S, Goksuluk D, Zararsiz G. MVN: An R Package for Assessing Multivariate Normality. The R Journal. 2014 6(2):151-162. URL \url{https://journal.r-project.org/archive/2014-2/korkmaz-goksuluk-zararsiz.pdf}
+
 Trujillo-Ortiz, A. and R. Hernandez-Walls. (2003). Mskekur: Mardia's multivariate skewness and kurtosis coefficients and its hypotheses testing. A MATLAB file. URL \url{http://www.mathworks.com/matlabcentral/fileexchange/loadFile.do?objectId=3519}
 
 Mardia, K. V. (1970), Measures of multivariate skewnees and kurtosis with applications. Biometrika, 57(3):519-530.

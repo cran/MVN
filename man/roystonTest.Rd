@@ -22,12 +22,16 @@ if \code{TRUE} it creates a chi-square Q-Q plot
 \details{
 A function to generate the Shapiro-Wilk's W statistic needed to feed the Royston's H test for multivariate normality
 However, if kurtosis of the data greater than 3 then \code{Shapiro-Francia} test is used for leptokurtic samples else \code{Shapiro-Wilk} test is used for platykurtic samples.
+
+If there are missing values in the data, a listwise deletion will be applied and a complete-case analysis will be performed.
 }
 \value{
  \item{H}{the value of Royston's H statistic at significance level \code{0.05}}
  \item{p-value}{an approximate p-value for the test with respect to equivalent degrees of freedom (\code{edf})}
 }
 \references{
+Korkmaz S, Goksuluk D, Zararsiz G. MVN: An R Package for Assessing Multivariate Normality. The R Journal. 2014 6(2):151-162. URL \url{https://journal.r-project.org/archive/2014-2/korkmaz-goksuluk-zararsiz.pdf}
+
 Johnson, R.A. and Wichern, D. W. (1992). Applied Multivariate Statistical Analysis. 3rd. ed. New-Jersey:Prentice Hall.
 
 Mecklin, C.J. and Mundfrom, D.J. (2005). A Monte Carlo comparison of the Type I and Type II error rates of tests of multivariate normality. Journal of Statistical Computation and Simulation, 75:93-107.

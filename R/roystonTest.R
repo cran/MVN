@@ -7,6 +7,7 @@ function (data, qqplot = FALSE)
         
         dataframe=as.data.frame(data)
         dname <- deparse(substitute(data))
+        data <- data[complete.cases(data),]
         data <- as.matrix(data)
         p <- dim(data)[2]
         n <- dim(data)[1]

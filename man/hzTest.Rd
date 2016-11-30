@@ -27,12 +27,16 @@ measures the distance between two distribution functions. If the data is multiva
 approximately lognormally distributed. It proceeds to calculate the mean,
 variance and smoothness parameter. Then, mean and variance are 
 lognormalized and the p-value is estimated.
+
+If there are missing values in the data, a listwise deletion will be applied and a complete-case analysis will be performed.
 }
 \value{
 \item{HZ}{the value of Henze-Zirkler statistic at significance level \code{0.05}}
 \item{p-value}{a p-value for the \code{HZ} test}
 }
 \references{
+Korkmaz S, Goksuluk D, Zararsiz G. MVN: An R Package for Assessing Multivariate Normality. The R Journal. 2014 6(2):151-162. URL \url{https://journal.r-project.org/archive/2014-2/korkmaz-goksuluk-zararsiz.pdf}
+
 Trujillo-Ortiz, A., R. Hernandez-Walls, K. Barba-Rojo and L. Cupul-Magana.(2007). HZmvntest:Henze-Zirkler's Multivariate Normality Test. A MATLAB
    file. URL \url{http://www.mathworks.com/matlabcentral/fileexchange/loadFile.do?objectId=17931}
 

@@ -8,7 +8,8 @@ Perspective and Contour Plots
 This function creates perspective and contour plots for a bivariate data set.
 }
 \usage{
-mvnPlot(object, type = c("persp", "contour"), default = TRUE, ...)
+mvnPlot(object, type=c("persp","contour"), default = TRUE, 
+        plotCtrl = c(perspControl(), contourControl()), ...)
 }
 
 \arguments{
@@ -21,6 +22,11 @@ if type is selected as \code{persp} it creates a perspective plot, if type is se
   \item{default}{
 when \code{default} is \code{TRUE} it creates plots in default settings
 }
+
+  \item{plotCtrl}{
+options for plot control
+}
+
   \item{\dots}{
 an optional argument
 }

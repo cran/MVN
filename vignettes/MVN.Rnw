@@ -16,9 +16,9 @@
 
 \title{MVN: An R Package for Assessing Multivariate Normality}
 \author{Selcuk Korkmaz$^1$, Dincer Goksuluk and Gokmen Zararsiz\\[0.35cm]
-\small{Hacettepe University, Faculty of Medicine, Department of Biostatistics, Ankara, TURKEY}\\[0cm]\textbf{\small{$^1$selcuk.korkmaz@hacettepe.edu.tr}}
+\small{Hacettepe University, Faculty of Medicine, Department of Biostatistics, Ankara, TURKEY}\\[0cm]\textbf{\small{$^1$selcukorkmaz@gmail.com}}
 } 
-\date{\textbf{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2015-01-28)}
+\date{\textbf{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2016-11-30)}
 
 \begin{document}
 

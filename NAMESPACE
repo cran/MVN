@@ -1,27 +1,25 @@
 exportPattern("^[[:alpha:]]+")
 
-import(methods)
+import("methods")
 
-importFrom(plyr, ldply)
-importFrom(moments, kurtosis)
-importFrom(nortest, sf.test)
-importFrom(nortest, cvm.test)
-importFrom(nortest, lillie.test)
-importFrom(nortest, ad.test)
-importFrom(robustbase, covMcd)
-importFrom(MASS, kde2d)
-importFrom(graphics, persp)
-importFrom(graphics, contour)
-importFrom(stats, mahalanobis)
-importFrom(mvoutlier, arw)
-importFrom(psych, describe)
+importFrom("plyr", "ldply")
+importFrom("moments", "kurtosis")
+importFrom("nortest", "sf.test", "cvm.test", "lillie.test", "ad.test")
+importFrom("robustbase", "covMcd")
+importFrom("MASS", "kde2d")
+importFrom("mvoutlier", "arw")
+importFrom("psych", "describe")
+importFrom("graphics", "contour", "persp", "abline", "boxplot", "curve", "hist", "legend",
+             "par", "plot", "text")
+importFrom("stats", "cor", "cov", "dnorm", "pchisq", "plnorm", "pnorm",
+             "qchisq", "qnorm", "qqline", "qqnorm", "quantile", "sd",
+             "shapiro.test", "complete.cases", "mahalanobis")
 
-
-export(hzTest)
-export(mardiaTest)
-export(roystonTest)
-export(mvnPlot)
-export(mvOutlier)
+export("hzTest")
+export("mardiaTest")
+export("roystonTest")
+export("mvnPlot")
+export("mvOutlier")
 
 exportClasses("hz")
 exportClasses("mardia")
