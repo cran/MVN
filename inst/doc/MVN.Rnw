@@ -502,6 +502,6 @@ Currently, \textbf{MVN} works with several statistical tests and graphical appro
 We would like to thank Izzet Parug Duru from Marmara University Department of Physics and Vahap Eldem from Istanbul University Department of Biology for making the web-tool version of the package possible.
 
 \bibliographystyle{unsrt}
-\bibliography{MVN.bib}
+\bibliography{MVN}
 
 \end{document}
