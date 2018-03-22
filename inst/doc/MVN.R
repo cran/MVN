@@ -1,5 +1,11 @@
 ## ----include=FALSE-------------------------------------------------------
 library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+
+## ----include=FALSE-------------------------------------------------------
+library(knitr)
 opts_chunk$set(concordance=TRUE)
 options(knitr.table.format = "latex")
 
@@ -46,18 +52,26 @@ library(kableExtra)
 
 ## ----"Mardia test", message=FALSE, echo=TRUE-----------------------------
 result <- mvn(data = setosa, mvnTest = "mardia")
-result$multivariateNormalityResult
+result$multivariateNormality
 
 ## ----message=FALSE, echo=FALSE-------------------------------------------
 tmp <- mvn(data = setosa, mvnTest = "mardia")
 
 ## ----"Henze-Zirkler test", message=FALSE, echo=TRUE----------------------
 result <- mvn(data = setosa, mvnTest = "hz")
-result$multivariateNormalityResult
+result$multivariateNormality
 
-## ----"Royston test", message=FALSE, echo=FALSE---------------------------
+## ----"Royston test", message=FALSE, echo=TRUE----------------------------
 result <- mvn(data = setosa, mvnTest = "royston")
-result$multivariateNormalityResult
+result$multivariateNormality
+
+## ----"Doornik-Hansen test", message=FALSE, echo=TRUE---------------------
+result <- mvn(data = setosa, mvnTest = "dh")
+result$multivariateNormality
+
+## ----"Energy test", message=FALSE, echo=TRUE-----------------------------
+result <- mvn(data = setosa, mvnTest = "energy")
+result$multivariateNormality
 
 ## ----echo=FALSE, message=FALSE, fig.width=5, fig.height=5----------------
 par(mar=c(4.2,4.1,3,0.2))
@@ -90,6 +104,8 @@ setosa3 <- iris[1:50, 1:3]
 mard <- mvn(setosa3, mvnTest = "mardia")
 hz <- mvn(setosa3, mvnTest = "hz")
 roys <- mvn(setosa3, mvnTest = "royston")
+dh <- mvn(setosa3, mvnTest = "dh")
+en <- mvn(setosa3, mvnTest = "en")
 
 ## ----eval=FALSE, fig.keep='none', message=FALSE, echo=TRUE---------------
 #  setosa2 <- iris[1:50, 1:2]
@@ -115,6 +131,8 @@ setosa2 <- iris[1:50, 1:2]
 mard <- mvn(setosa2, mvnTest = "mardia")
 hz <- mvn(setosa2, mvnTest = "hz")
 roys <- mvn(setosa2, mvnTest = "royston")
+dh <- mvn(setosa2, mvnTest = "dh")
+en <- mvn(setosa2, mvnTest = "en")
 
 ## ----mvoutlier, eval=FALSE, echo=TRUE------------------------------------
 #  versicolor <- iris[51:100, 1:3]
@@ -124,12 +142,12 @@ roys <- mvn(setosa2, mvnTest = "royston")
 #  result <- mvn(data = versicolor, mvnTest = "hz", multivariateOutlierMethod = "adj")
 
 ## ----echo=FALSE, message=FALSE, fig.width=5, fig.height=5----------------
-versicolor <- iris[51:100, 1:3]
-result <- mvn(data = versicolor, mvnTest = "hz", multivariateOutlierMethod = "quan")
+  versicolor <- iris[51:100, 1:3]
+  result <- mvn(data = versicolor, mvnTest = "hz", multivariateOutlierMethod = "quan")
 
 ## ----echo=FALSE, message=FALSE, fig.width=5, fig.height=5----------------
-versicolor <- iris[51:100, 1:3]
-result <- mvn(data = versicolor, mvnTest = "hz", multivariateOutlierMethod = "adj")
+  versicolor <- iris[51:100, 1:3]
+  result <- mvn(data = versicolor, mvnTest = "hz", multivariateOutlierMethod = "adj")
 
 ## ----echo=TRUE, message=FALSE--------------------------------------------
 head(iris)
