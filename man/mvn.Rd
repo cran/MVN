@@ -5,11 +5,11 @@
 \title{Multivariate Normality Tests}
 \usage{
 mvn(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh",
-  "energy"), covariance = TRUE, scale = FALSE, desc = TRUE,
-  transform = "none", R = 1000, univariateTest = c("SW", "CVM", "Lillie",
-  "SF", "AD"), univariatePlot = "none", multivariatePlot = "none",
-  multivariateOutlierMethod = "none", showOutliers = FALSE,
-  showNewData = FALSE)
+  "energy"), covariance = TRUE, tol = 1e-25, alpha = 0.5, scale = FALSE,
+  desc = TRUE, transform = "none", R = 1000, univariateTest = c("SW",
+  "CVM", "Lillie", "SF", "AD"), univariatePlot = "none",
+  multivariatePlot = "none", multivariateOutlierMethod = "none",
+  showOutliers = FALSE, showNewData = FALSE)
 }
 \arguments{
 \item{data}{a numeric matrix or data frame}
@@ -19,6 +19,10 @@ mvn(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh",
 \item{mvnTest}{select one of the MVN tests. Type \code{"mardia"} for Mardia's test, \code{"hz"} for Henze-Zirkler's test, \code{"royston"} for Royston's test, \code{"dh"} for Doornik-Hansen's test and \code{energy} for E-statistic. See details for further information.}
 
 \item{covariance}{this option works for \code{"mardia"} and \code{"royston"}. If \code{TRUE} covariance matrix is normalized by \code{n}, if \code{FALSE} it is normalized by \code{n-1}}
+
+\item{tol}{a numeric tolerance value which isused for inversion of the covariance matrix (\code{default = 1e-25}}
+
+\item{alpha}{a numeric parameter controlling the size of the subsets over which the determinant is minimized. Allowed values for the alpha are between 0.5 and 1 and the default is 0.5.}
 
 \item{scale}{if \code{TRUE} scales the colums of data}
 

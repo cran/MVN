@@ -1,4 +1,4 @@
-mardia <- function(data, cov = TRUE){
+mardia <- function(data, cov = TRUE, tol = 1e-25){
 
   dataframe=as.data.frame(data)
   dname <- deparse(substitute(data))
@@ -16,7 +16,7 @@ mardia <- function(data, cov = TRUE){
   else {
     S <- cov(data)
   }
-  D <- data %*% solve(S) %*% t(data)
+  D <- data %*% solve(S, tol = tol) %*% t(data)
   g1p <- sum(D^3)/n^2
   g2p <- sum(diag((D^2)))/n
   df <- p * (p + 1) * (p + 2)/6
@@ -54,7 +54,7 @@ mardia <- function(data, cov = TRUE){
     result = rbind.data.frame(resultSkewness, resultKurtosis, MVNresult)
 }
 
-hz <- function(data, cov = TRUE){
+hz <- function(data, cov = TRUE, tol = 1e-25){
 
   dataframe=as.data.frame(data)
   dname <- deparse(substitute(data))
@@ -73,9 +73,9 @@ hz <- function(data, cov = TRUE){
 
   dif <- scale(data, scale = FALSE)
 
-  Dj <- diag(dif%*%solve(S)%*%t(dif))  #squared-Mahalanobis' distances
+  Dj <- diag(dif%*%solve(S, tol = tol)%*%t(dif))  #squared-Mahalanobis' distances
 
-  Y <- data%*%solve(S)%*%t(data)
+  Y <- data%*%solve(S, tol = tol)%*%t(data)
 
 
   Djk <- - 2*t(Y) + matrix(diag(t(Y)))%*%matrix(c(rep(1,n)),1,n) + matrix(c(rep(1,n)),n,1)%*%diag(t(Y))
@@ -114,7 +114,7 @@ hz <- function(data, cov = TRUE){
   result
 }
 
-royston <- function (data) {
+royston <- function (data, tol = 1e-25) {
   if (dim(data)[2] < 2 || is.null(dim(data))) {
     stop("number of variables must be equal or greater than 2")
   }
@@ -194,7 +194,7 @@ royston <- function (data) {
   }
   data <- scale(data, scale = FALSE)
   Sa <- cov(data)
-  D <- data %*% solve(Sa) %*% t(data)
+  D <- data %*% solve(Sa, tol = tol) %*% t(data)
 
   RH <- (edf * (sum(Res)))/p
   pValue <- pchisq(RH, edf, lower.tail = FALSE)
@@ -204,7 +204,6 @@ royston <- function (data) {
   result <- cbind.data.frame(Test = "Royston", H = RH, "p value" = pValue, MVN = MVN)
 
   result
-
 
 }
 
@@ -678,6 +677,8 @@ uniPlot <- function (data, type = c("qqplot", "histogram", "box", "scatter"),
 #' @param subset define a variable name if subset analysis is required
 #' @param mvnTest select one of the MVN tests. Type \code{"mardia"} for Mardia's test, \code{"hz"} for Henze-Zirkler's test, \code{"royston"} for Royston's test, \code{"dh"} for Doornik-Hansen's test and \code{energy} for E-statistic. See details for further information.
 #' @param covariance this option works for \code{"mardia"} and \code{"royston"}. If \code{TRUE} covariance matrix is normalized by \code{n}, if \code{FALSE} it is normalized by \code{n-1}
+#' @param tol a numeric tolerance value which isused for inversion of the covariance matrix (\code{default = 1e-25}
+#' @param alpha a numeric parameter controlling the size of the subsets over which the determinant is minimized. Allowed values for the alpha are between 0.5 and 1 and the default is 0.5.
 #' @param scale if \code{TRUE} scales the colums of data
 #' @param desc a logical argument. If \code{TRUE} calculates descriptive statistics
 #' @param transform select a transformation method to transform univariate marginal via logarithm (\code{"log"}), square root (\code{"sqrt"}) and square (\code{"square"}).
@@ -788,7 +789,7 @@ uniPlot <- function (data, type = c("qqplot", "histogram", "box", "scatter"),
 #' @importFrom stats rnorm var median cor cov dnorm pchisq plnorm pnorm qchisq qnorm qqline qqnorm quantile sd shapiro.test complete.cases mahalanobis
 #'
 
-mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh", "energy"), covariance = TRUE, scale = FALSE, desc = TRUE, transform = "none", R = 1000,
+mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh", "energy"), covariance = TRUE, tol = 1e-25, alpha = 0.5, scale = FALSE, desc = TRUE, transform = "none", R = 1000,
                 univariateTest = c("SW", "CVM", "Lillie", "SF", "AD"), univariatePlot = "none",  multivariatePlot = "none", multivariateOutlierMethod = "none",
                 showOutliers = FALSE, showNewData = FALSE){
 
@@ -827,19 +828,19 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
 
         if(mvnTest == "mardia"){
 
-          mvnResult = mardia(data, cov = covariance)
+          mvnResult = mardia(data, cov = covariance, tol = tol)
 
         }
 
         if(mvnTest == "hz"){
 
-          mvnResult = hz(data, cov = covariance)
+          mvnResult = hz(data, cov = covariance, tol = tol)
 
         }
 
         if(mvnTest == "royston"){
 
-          mvnResult = royston(data)
+          mvnResult = royston(data, tol = tol)
 
         }
 
@@ -871,7 +872,7 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
 
         dif <- scale(data, scale = FALSE)
 
-        d <- diag(dif %*% solve(S) %*% t(dif))
+        d <- diag(dif %*% solve(S, tol = tol) %*% t(dif))
 
         r <- rank(d)
 
@@ -947,7 +948,7 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
 
     }
 
-       mvOutlierRes = mvOutlier(data, qqplot = TRUE, alpha = 0.5, tol = 1e-25, method = multivariateOutlierMethod, label = TRUE, position = NULL, offset = 0.5, main = main)
+       mvOutlierRes = mvOutlier(data, qqplot = TRUE, alpha = alpha, tol = tol, method = multivariateOutlierMethod, label = TRUE, position = NULL, offset = 0.5, main = main)
        mvOutliers = mvOutlierRes$outlier[mvOutlierRes$outlier$Outlier == "TRUE",]
        newData = mvOutlierRes$newData
 
@@ -1005,19 +1006,19 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
 
         if(mvnTest == "mardia"){
 
-          mvnResult = lapply(splitData, mardia, cov = covariance)
+          mvnResult = lapply(splitData, mardia, cov = covariance, tol = tol)
 
         }
 
         if(mvnTest == "hz"){
 
-          mvnResult = lapply(splitData, hz, cov = covariance)
+          mvnResult = lapply(splitData, hz, cov = covariance, tol = tol)
 
         }
 
         if(mvnTest == "royston"){
 
-          mvnResult = lapply(splitData, royston)
+          mvnResult = lapply(splitData, royston, tol = tol)
 
         }
 
@@ -1092,7 +1093,7 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
 
           dif <- scale(subsetData, scale = FALSE)
 
-          d <- diag(dif %*% solve(S) %*% t(dif))
+          d <- diag(dif %*% solve(S, tol = tol) %*% t(dif))
 
           r <- rank(d)
 
