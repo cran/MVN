@@ -1,8 +1,8 @@
 Package: MVN
 Type: Package
 Title: Multivariate Normality Tests
-Version: 5.3
-Date: 2018-05-06
+Version: 5.4
+Date: 2018-06-09
 Authors@R: c(person("Selcuk", "Korkmaz", role = c("aut", "cre"),
                      email = "selcukorkmaz@gmail.com"),
               person("Dincer", "Goksuluk", role = "aut",
@@ -25,6 +25,6 @@ Description: Performs multivariate normality tests and graphical approaches and
 License: GPL (>= 2)
 RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2018-05-07 08:10:34 UTC; selcukkorkmaz
+Packaged: 2018-06-09 18:29:45 UTC; selcukkorkmaz
 Repository: CRAN
-Date/Publication: 2018-05-07 08:43:30 UTC
+Date/Publication: 2018-06-09 18:52:54 UTC

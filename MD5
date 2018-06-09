@@ -1,14 +1,14 @@
-c64aad1ecdc7a6a3c6006f8187e43043 *DESCRIPTION
+cc569affe9e72e05f2832f9d47eea59e *DESCRIPTION
 694b2518089b5dd705fd51a9afea3ce6 *NAMESPACE
 a8accd5922ee2a8d193c3e337032cdcf *R/hzTest.R
 2d005cbf7d7d74238715b7347d727980 *R/mardiaTest.R
-340a55fdb02ffb89f2c293d2ea220b0b *R/mvn.R
+3559bbf7d37c0c1d4c6fb8e1c5a78972 *R/mvn.R
 c9c45764cc977bec3a6b99c49ae51086 *R/roystonTest.R
 efd6424be99c47340b561bc87b57c7b5 *build/vignette.rds
 16fff0dc1752928df45168cf6a857e61 *inst/CITATION
 3cfd471cea3f7f6b99dc0b80f2286c98 *inst/doc/MVN.R
 5e59360efbe1a19d31f0cd2252b00f00 *inst/doc/MVN.Rnw
-cb93dac304c51ec311c91f8de00e37b1 *inst/doc/MVN.pdf
+6c90452cabfe602f11c8cc904de3fae2 *inst/doc/MVN.pdf
 10eb8e3795c15a567cbd9240f2bf508b *man/hzTest.Rd
 deef1228be327d0281a0bc64a4ea7b31 *man/mardiaTest.Rd
 ace6dbd16459340b55119b6e81f5dd0d *man/mvn.Rd
