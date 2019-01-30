@@ -666,10 +666,45 @@ uniPlot <- function (data, type = c("qqplot", "histogram", "box", "scatter"),
   }
 }
 
+BoxCox <- function(data, type = c("optimal", "rounded")){
+
+  powerTransformation = summary(powerTransform(data))$result
+
+  if(type == "optimal"){
+
+    lambda = powerTransformation[,1]
+
+  }
+
+  if(type == "rounded"){
+
+    lambda = powerTransformation[,2]
+
+  }
+
+  for(i in 1:length(lambda)){
+
+    if(lambda[[i]] == 0){
+
+      data[i] = log(data[i])
+
+    }else{
+
+      data[i] = data[i]^lambda[[i]]
+
+    }
+  }
+
+  result = list(data, lambda)
+
+  return(result)
+}
+
+
 
 #' Multivariate Normality Tests
 #'
-#' Performs multivariate normality tests, including Marida, Royston, Henze-Zirkler, Dornik-Haansen, E-Statistics, and graphical approaches and implements multivariate outlier detection and univariate normality of marginal distributions through plots and tests.
+#' Performs multivariate normality tests, including Marida, Royston, Henze-Zirkler, Dornik-Haansen, E-Statistics, and graphical approaches and implements multivariate outlier detection and univariate normality of marginal distributions through plots and tests, and performs multivariate Box-Cox transformation.
 #'
 #' @param data a numeric matrix or data frame
 #' @param subset define a variable name if subset analysis is required
@@ -685,6 +720,8 @@ uniPlot <- function (data, type = c("qqplot", "histogram", "box", "scatter"),
 #' @param univariatePlot select one of the univariate normality plots, Q-Q plot (\code{"qq"}), histogram (\code{"histogram"}), box plot (\code{"box"}), scatter (\code{"scatter"})
 #' @param multivariatePlot \code{"qq"} for chi-square Q-Q plot, \code{"persp"} for perspective plot, \code{"contour"} for contour plot
 #' @param multivariateOutlierMethod select multivariate outlier detection method, \code{"quan"} quantile method based on Mahalanobis distance and \code{"adj"} adjusted quantile method based on Mahalanobis distance
+#' @param bc if \code{TRUE} it applies Box-Cox power transformation
+#' @param bcType select \code{"optimal"} or \code{"rounded"} type of Box-Cox power transformation, only applicable if \code{bc = TRUE}, default is \code{"rounded"}
 #' @param showOutliers if \code{TRUE} prints multivariate outliers
 #' @param showNewData if \code{TRUE} prints new data without outliers
 #'
@@ -783,43 +820,54 @@ uniPlot <- function (data, type = c("qqplot", "histogram", "box", "scatter"),
 #' @importFrom MASS kde2d
 #' @importFrom mvoutlier arw
 #' @importFrom psych describe
+#' @importFrom car powerTransform
 #' @importFrom graphics contour persp abline boxplot curve hist legend par plot text
 #' @importFrom stats rnorm var median cor cov dnorm pchisq plnorm pnorm qchisq qnorm qqline qqnorm quantile sd shapiro.test complete.cases mahalanobis
 #'
 
 mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh", "energy"), covariance = TRUE, tol = 1e-25, alpha = 0.5, scale = FALSE, desc = TRUE, transform = "none", R = 1000,
                 univariateTest = c("SW", "CVM", "Lillie", "SF", "AD"), univariatePlot = "none",  multivariatePlot = "none", multivariateOutlierMethod = "none",
-                showOutliers = FALSE, showNewData = FALSE){
+                bc = FALSE, bcType = "rounded", showOutliers = FALSE, showNewData = FALSE){
 
   mvnTest <- match.arg(mvnTest)
   univariateTest <- match.arg(univariateTest)
 
+  if(bc && transform != "none"){
+
+    stop("Please select transform = 'none' if you apply Box-Cox transformation or select bc = FALSE and apply one of the transformation method directly, as log, sqrt and square.")
+  }
 
   if(is.null(subset)){
 
+      if(bc){
 
-    if(transform == "log"){
+      result = BoxCox(data, type = bcType)
+      data = result[[1]]
+      BoxCoxPower = result[[2]]
+
+    }
+
+      if(transform == "log"){
 
       data = apply(data,2,log)
 
     }
 
-    if(transform == "sqrt"){
+      if(transform == "sqrt"){
 
       data = apply(data,2,sqrt)
 
     }
 
-    if(transform == "square"){
+      if(transform == "square"){
 
-      data = apply(data,2,function(x){
+        data = apply(data,2,function(x){
 
         return(x^2)
 
       })
 
     }
-
 
 
     if (!(dim(data)[2] < 2 || is.null(dim(data)))){
@@ -895,7 +943,7 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
       }
 
 
-      }else{mvnResult = "No MVN result. Number of variables is less than 2 "}
+      }else{mvnResult = "No MVN result. Number of variables is less than 2!"}
 
         if(univariateTest == "SW"){
 
@@ -961,6 +1009,30 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
     }else{
 
 
+      if(bc){
+
+        sData = split(data[,!(colnames(data) %in% subset)], data[,subset])
+
+        result = lapply(sData, BoxCox, type = bcType)
+        dataList = list()
+        bcList = list()
+
+        for(i in 1:length(result)){
+
+          dataList[[i]] = result[[i]][[1]]
+          bcList[[i]] = result[[i]][[2]]
+        }
+
+        data = cbind.data.frame(do.call(rbind.data.frame, dataList), data[subset])
+
+        BoxCoxPower = bcList
+        names(BoxCoxPower) = names(sData)
+
+      }
+
+      splitData = split(data[,!(colnames(data) %in% subset)], data[,subset])
+
+      name = names(splitData)
 
       if(transform == "log"){
 
@@ -995,9 +1067,6 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
       }
 
 
-      splitData = split(data[,!(colnames(data) %in% subset)], data[,subset])
-
-      name = names(splitData)
 
 
       if (!(is.null(lapply(splitData, dim)[[1]]))){
@@ -1067,7 +1136,6 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
       if(desc){
 
         descs = lapply(splitData, descriptives)
-        descs
 
       }else{descs = NULL}
 
@@ -1180,6 +1248,12 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
    if (showNewData){
 
     result = c(result, list(newData = newData))
+
+   }
+
+  if (bc){
+
+    result = c(result, list(BoxCoxPowerTransformation = BoxCoxPower))
 
   }
 

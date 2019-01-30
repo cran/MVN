@@ -28,7 +28,7 @@
 \author{Selcuk Korkmaz$^1$, Dincer Goksuluk and Gokmen Zararsiz\\[0.35cm]
 \small{Trakya University, Faculty of Medicine, Department of Biostatistics, Edirne, TURKEY}\\[0cm]\textbf{\small{$^1$selcukorkmaz@gmail.com}}
 }
-\date{\textbf{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2018-06-14)}
+\date{\textbf{MVN} version \Sexpr{packageDescription("MVN")$Version}  (Last revision 2019-01-30)}
 
 \begin{document}
 
@@ -97,16 +97,16 @@ mvn(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh",
   scale = FALSE, desc = TRUE, transform = "none", R = 1000,
   univariateTest = c("SW", "CVM", "Lillie", "SF", "AD"),
   univariatePlot = "none", multivariatePlot = "none",
-  multivariateOutlierMethod = "none", showOutliers = FALSE,
-  showNewData = FALSE)
+  multivariateOutlierMethod = "none", bc = FALSE, bcType = "rounded",
+  showOutliers = FALSE, showNewData = FALSE)
 
 @
 
 
 <<message=FALSE, echo=FALSE, warning=FALSE, eval=TRUE>>=
   text_tbl <- data.frame(
-  Arguments = c("data", "subset", "mvnTest", "covariance", "tol", "alpha", "scale", "desc", "transform", "R", "univariateTest", "univariatePlot", "multivariatePlot", "multivariateOutlierMethod", "showOutliers", "showNewData"),
-  Definition = c( "a numeric matrix or data frame", "define a variable name if subset analysis is required", "select one of the MVN tests. Type 'mardia' for Mardia's test, 'hz' for Henze-Zirkler's test, 'royston' for Royston's test, 'dh' for Doornik-Hansen's test and energy for E-statistic. See details for further information.", "this option works for 'mardia' and 'royston'. If TRUE covariance matrix is normalized by n, if FALSE it is normalized by n-1", "a numeric tolerance value which isused for inversion of the covariance matrix (default = 1e-25)", "a numeric parameter controlling the size of the subsets over which the determinant is minimized. Allowed values for the alpha are between 0.5 and 1 and the default is 0.5.", "if TRUE scales the colums of data", "a logical argument. If TRUE calculates descriptive statistics", "select a transformation method to transform univariate marginal via logarithm ('log'), square root ('sqrt') and square ('square')", "number of bootstrap replicates for Energy test, default is 1000", "select one of the univariate normality tests, Shapiro-Wilk ('SW'), Cramer-von Mises ('CVM'), Lilliefors ('Lillie'), Shapiro-Francia ('SF'), Anderson-Darling ('AD')", "select one of the univariate normality plots, Q-Q plot ('qq'), histogram ('histogram'), box plot ('box'), scatter ('scatter')", "'qq' for chi-square Q-Q plot, 'persp' for perspective plot, 'contour' for contour plot", "select multivariate outlier detection method, 'quan' quantile method based on Mahalanobis distance and 'adj' adjusted quantile method based on Mahalanobis distance", "if TRUE prints multivariate outliers", "if TRUE prints new data without outliers"
+  Arguments = c("data", "subset", "mvnTest", "covariance", "tol", "alpha", "scale", "desc", "transform", "R", "univariateTest", "univariatePlot", "multivariatePlot", "multivariateOutlierMethod", "bc", "bcType", "showOutliers", "showNewData"),
+  Definition = c( "a numeric matrix or data frame", "define a variable name if subset analysis is required", "select one of the MVN tests. Type 'mardia' for Mardia's test, 'hz' for Henze-Zirkler's test, 'royston' for Royston's test, 'dh' for Doornik-Hansen's test and 'energy' for E-statistic. See details for further information.", "this option works for 'mardia' and 'royston'. If TRUE covariance matrix is normalized by n, if FALSE it is normalized by n-1", "a numeric tolerance value which isused for inversion of the covariance matrix (default = 1e-25)", "a numeric parameter controlling the size of the subsets over which the determinant is minimized. Allowed values for the alpha are between 0.5 and 1 and the default is 0.5.", "if TRUE scales the colums of data", "a logical argument. If TRUE calculates descriptive statistics", "select a transformation method to transform univariate marginal via logarithm ('log'), square root ('sqrt') and square ('square')", "number of bootstrap replicates for Energy test, default is 1000", "select one of the univariate normality tests, Shapiro-Wilk ('SW'), Cramer-von Mises ('CVM'), Lilliefors ('Lillie'), Shapiro-Francia ('SF'), Anderson-Darling ('AD')", "select one of the univariate normality plots, Q-Q plot ('qq'), histogram ('histogram'), box plot ('box'), scatter ('scatter')", "'qq' for chi-square Q-Q plot, 'persp' for perspective plot, 'contour' for contour plot", "select multivariate outlier detection method, 'quan' quantile method based on Mahalanobis distance and 'adj' adjusted quantile method based on Mahalanobis distance", "if TRUE it applies Box-Cox power transformation", "select optimal or rounded type of Box-Cox power transformation, only applicable if bc = TRUE", "if TRUE prints multivariate outliers", "if TRUE prints new data without outliers"
   )
   )
 
@@ -292,7 +292,7 @@ en <- mvn(setosa3, mvnTest = "en")
       \caption{MVN test results (\texttt{setosa} without \texttt{Petal.Width}).} \label{tbl:setosa}
 \end{table}
 
-According to the three MVN test results in Table \ref{tbl:setosa}, \texttt{setosa} without \texttt{Petal.Width} has a multivariate normal distribution at significance level 0.05. \\
+According to the all tests, except Doornik-Hansen's, in Table \ref{tbl:setosa}, \texttt{setosa} without \texttt{Petal.Width} has a multivariate normal distribution at significance level 0.05. \\
 \newline
 \textbf{Example II:} Whilst the Q-Q plot is a general approach for assessing MVN in all types of numerical multivariate datasets, perspective and contour plots can only be used for bivariate data. To demonstrate the applicability of these two approaches, we will use a subset of \texttt{Iris} data, named \texttt{setosa2}, including the \texttt{sepal length} and \texttt{sepal width} variables of the \texttt{setosa} species. % One can obtain the results as in Table \ref{tbl:iris2}:
 
@@ -377,7 +377,7 @@ en <- mvn(setosa2, mvnTest = "en")
 \end{table}
 
 
-All three tests in Table \ref{tbl:setosa} indicate that the data set satisfies bivariate normality assumption at the significance level $0.05$. Moreover, the perspective and contour plots are in agreement with the test results and indicate approximate bivariate normality.
+All tests, except Doornik-Hansen's, in Table \ref{tbl:setosa} indicate that the data set satisfies bivariate normality assumption at the significance level $0.05$. Moreover, the perspective and contour plots are in agreement with the test results and indicate approximate bivariate normality.
 
 Figures \ref{fig:persp} and \ref{fig:contour} were drawn using a pre-defined graphical option by the authors. However, users may change these options by setting function entry to \texttt{default = FALSE}. If the \texttt{default} is \texttt{FALSE}, optional arguments from the \texttt{plot}, \texttt{persp} and \texttt{contour} functions may be introduced to the corresponding graphs.
 
