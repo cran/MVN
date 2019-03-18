@@ -291,28 +291,29 @@ descriptives <- function(data){
 
   if (is.data.frame(data) || is.matrix(data)){
       varnames = colnames(data)
-      n = apply(data, 2, length)
-      meanRes = apply(data, 2, mean)
-      sdRes = apply(data, 2, sd)
-      medianRes = apply(data, 2, median)
-      minRes = apply(data, 2, min)
-      maxRes = apply(data, 2, max)
-      q1Res = apply(data, 2, quantile)[2,]
-      q3Res = apply(data, 2, quantile)[4,]
-      skewRes = apply(data, 2, psych::skew, type=3)
-      kurtosisRes = apply(data, 2, psych::kurtosi, type=3)
+      dataFull = data[complete.cases(data),]
+      n = apply(dataFull, 2, length)
+      meanRes = apply(dataFull, 2, mean, na.rm = TRUE)
+      sdRes = apply(dataFull, 2, sd, na.rm = TRUE)
+      medianRes = apply(dataFull, 2, median, na.rm = TRUE)
+      minRes = apply(dataFull, 2, min, na.rm = TRUE)
+      maxRes = apply(dataFull, 2, max, na.rm = TRUE)
+      q1Res = apply(dataFull, 2, quantile, na.rm = TRUE)[2,]
+      q3Res = apply(dataFull, 2, quantile, na.rm = TRUE)[4,]
+      skewRes = apply(dataFull, 2, psych::skew, type=3)
+      kurtosisRes = apply(dataFull, 2, psych::kurtosi, type=3)
 
     }else{
 
       varnames = "variable"
       n = length(data)
-      meanRes = mean(data)
-      sdRes = sd(data)
-      medianRes = median(data)
-      minRes = min(data)
-      maxRes = max(data)
-      q1Res = quantile(data)[2]
-      q3Res = quantile(data)[4]
+      meanRes = mean(data, na.rm = TRUE)
+      sdRes = sd(data, na.rm = TRUE)
+      medianRes = median(data, na.rm = TRUE)
+      minRes = min(data, na.rm = TRUE)
+      maxRes = max(data, na.rm = TRUE)
+      q1Res = quantile(data, na.rm = TRUE)[2]
+      q3Res = quantile(data, na.rm = TRUE)[4]
       skewRes = psych::skew(data, type=3)
       kurtosisRes = psych::kurtosi(data, type=3)
 
@@ -334,6 +335,8 @@ descriptives <- function(data){
 uniNorm <- function(data, type = c("SW", "CVM", "Lillie", "SF", "AD")){
   if (!is.data.frame(data) && !is.matrix(data) && !is.numeric(data)) stop(warning('Input must be one of classes \"vector\", \"data frame\" or \"matrix\"'))
   type = match.arg(type)
+
+  data = data[complete.cases(data),]
 
   if (type == "AD") TestName = "Anderson-Darling"
   if (type == "CVM") TestName = "Cramer-von Mises"
@@ -406,6 +409,7 @@ uniNorm <- function(data, type = c("SW", "CVM", "Lillie", "SF", "AD")){
 
 mvnPlot <- function (data,  type = c("persp", "contour"), default = TRUE,
           plotCtrl = c(perspControl(), contourControl()), ...){
+  data = data[complete.cases(data),]
   type <- match.arg(type)
   # if (!(class(object)[1] %in% c("mardia", "hz", "royston")))
   #   stop("Object must be in one of the following classes: \"mardia\", \"hz\", \"royston\" ")
@@ -480,6 +484,7 @@ mvOutlier <- function (data, qqplot = TRUE, alpha = 0.5, tol = 1e-25, method = c
   if (dim(data)[2] < 2 || is.null(dim(data))) {
     stop("number of variables must be equal or greater than 2")
   }
+  data = data[complete.cases(data),]
   dataframe = as.data.frame(data)
   dname <- deparse(substitute(data))
   method <- match.arg(method)
@@ -602,6 +607,7 @@ uniPlot <- function (data, type = c("qqplot", "histogram", "box", "scatter"),
     stop(warning("Input must be one of classes \"vector\", \"data frame\" or \"matrix\""))
   # type = match.arg(type)
   if (is.data.frame(data) || is.matrix(data)) {
+    data = data[complete.cases(data),]
     data = as.data.frame(data)
     if (nrow(data) < 2)
       stop(warning("Too few number of observations (n < 2)."))
@@ -668,6 +674,7 @@ uniPlot <- function (data, type = c("qqplot", "histogram", "box", "scatter"),
 
 BoxCox <- function(data, type = c("optimal", "rounded")){
 
+  data = data[complete.cases(data),]
   powerTransformation = summary(powerTransform(data))$result
 
   if(type == "optimal"){
@@ -831,6 +838,8 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
 
   mvnTest <- match.arg(mvnTest)
   univariateTest <- match.arg(univariateTest)
+
+  colnms = colnames(data)
 
   if(bc && transform != "none"){
 
@@ -1012,6 +1021,9 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
       if(bc){
 
         sData = split(data[,!(colnames(data) %in% subset)], data[,subset])
+        comp <- lapply(sData, complete.cases)
+        clean_data <- Map(function(d,c) {d[c,]}, sData, comp)
+        sData <- lapply(sData, function(x) x[complete.cases(x),])
 
         result = lapply(sData, BoxCox, type = bcType)
         dataList = list()
@@ -1023,16 +1035,15 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
           bcList[[i]] = result[[i]][[2]]
         }
 
-        data = cbind.data.frame(do.call(rbind.data.frame, dataList), data[subset])
+        data = cbind.data.frame(do.call(rbind.data.frame, dataList), data[subset][complete.cases(data),])
+
+        colnames(data) = colnms
+
 
         BoxCoxPower = bcList
         names(BoxCoxPower) = names(sData)
 
       }
-
-      splitData = split(data[,!(colnames(data) %in% subset)], data[,subset])
-
-      name = names(splitData)
 
       if(transform == "log"){
 
@@ -1066,8 +1077,9 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
         colnames(data)[dim(data)[2]] = subset
       }
 
+      splitData = split(data[,!(colnames(data) %in% subset)], data[subset])
 
-
+      name = names(splitData)
 
       if (!(is.null(lapply(splitData, dim)[[1]]))){
 
@@ -1144,7 +1156,8 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
 
         for(i in 1:length(name)){
 
-          subsetData = splitData[[i]]
+          subsetData = splitData[[i]][complete.cases(splitData[[i]]),]
+
 
           n <- dim(subsetData)[1]
           p <- dim(subsetData)[2]
@@ -1152,8 +1165,7 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
 
           if (covariance) {
             S <- ((n - 1)/n) * cov(subsetData)
-          }
-          else {
+          }else {
             S <- cov(subsetData)
           }
 
@@ -1175,7 +1187,7 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
 
         for(i in 1:length(name)){
 
-        subsetData = splitData[[i]]
+        subsetData = splitData[[i]][complete.cases(splitData[[i]]),]
 
         mvnPlot(subsetData, type = "persp", default = TRUE,
                 plotCtrl = c(perspControl(), contourControl()), main = paste0("Perspective Plot for ", name[i]))
@@ -1185,7 +1197,8 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
       if (multivariatePlot == "contour") {
 
         for(i in 1:length(name)){
-        subsetData = splitData[[i]]
+
+        subsetData = splitData[[i]][complete.cases(splitData[[i]]),]
 
         mvnPlot(subsetData, type = "contour", default = TRUE,
                 plotCtrl = c(perspControl(), contourControl()), main = paste0("Contour Plot for ", name[i]))
@@ -1210,8 +1223,8 @@ mvn <- function(data, subset = NULL, mvnTest = c("mardia", "hz", "royston", "dh"
 
 
         for(i in 1:length(name)){
-
-          mvOutlierRes = mvOutlier(splitData[[i]], qqplot = TRUE, alpha = 0.5, tol = 1e-25, method = multivariateOutlierMethod, label = TRUE, position = NULL, offset = 0.5, main = main)
+          subsetData = splitData[[i]][complete.cases(splitData[[i]]),]
+          mvOutlierRes = mvOutlier(subsetData, qqplot = TRUE, alpha = 0.5, tol = 1e-25, method = multivariateOutlierMethod, label = TRUE, position = NULL, offset = 0.5, main = main)
           mvOutliers[[i]] = mvOutlierRes$outlier[mvOutlierRes$outlier$Outlier == "TRUE",]
           newData[[i]] = mvOutlierRes$newData
         }
