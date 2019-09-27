@@ -1,8 +1,8 @@
 Package: MVN
 Type: Package
 Title: Multivariate Normality Tests
-Version: 5.7
-Date: 2019-03-18
+Version: 5.8
+Date: 2019-09-27
 Authors@R: c(person("Selcuk", "Korkmaz", role = c("aut", "cre"),
                      email = "selcukorkmaz@gmail.com"),
               person("Dincer", "Goksuluk", role = "aut",
@@ -27,6 +27,6 @@ Encoding: UTF-8
 License: GPL (>= 2)
 RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2019-03-18 13:29:18 UTC; selcukkorkmaz
+Packaged: 2019-09-27 13:51:38 UTC; selcukkorkmaz
 Repository: CRAN
-Date/Publication: 2019-03-18 14:03:25 UTC
+Date/Publication: 2019-09-27 14:40:07 UTC

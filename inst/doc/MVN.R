@@ -51,26 +51,26 @@ library(kableExtra)
     column_spec(2, width = "30em") %>%
         kable_styling(latex_options = "striped")
 
-## ----"Mardia test", message=FALSE, echo=TRUE-----------------------------
+## ----"Mardia_test", message=FALSE, echo=TRUE-----------------------------
 result <- mvn(data = setosa, mvnTest = "mardia")
 result$multivariateNormality
 
 ## ----message=FALSE, echo=FALSE-------------------------------------------
 tmp <- mvn(data = setosa, mvnTest = "mardia")
 
-## ----"Henze-Zirkler test", message=FALSE, echo=TRUE----------------------
+## ----"Henze-Zirkler_test", message=FALSE, echo=TRUE----------------------
 result <- mvn(data = setosa, mvnTest = "hz")
 result$multivariateNormality
 
-## ----"Royston test", message=FALSE, echo=TRUE----------------------------
+## ----"Royston_test", message=FALSE, echo=TRUE----------------------------
 result <- mvn(data = setosa, mvnTest = "royston")
 result$multivariateNormality
 
-## ----"Doornik-Hansen test", message=FALSE, echo=TRUE---------------------
+## ----"Doornik-Hansen_test", message=FALSE, echo=TRUE---------------------
 result <- mvn(data = setosa, mvnTest = "dh")
 result$multivariateNormality
 
-## ----"Energy test", message=FALSE, echo=TRUE-----------------------------
+## ----"Energy_test", message=FALSE, echo=TRUE-----------------------------
 result <- mvn(data = setosa, mvnTest = "energy")
 result$multivariateNormality
 
@@ -95,7 +95,7 @@ result <- mvn(data = setosa, mvnTest = "royston", univariatePlot = "histogram")
 
 ## ----eval=FALSE, message=FALSE, echo=TRUE--------------------------------
 #  result <- mvn(data = setosa, mvnTest = "royston", univariateTest = "SW", desc = TRUE)
-#  result$univariateNormalityResult
+#  result$univariateNormality
 
 ## ----SWUnivariate, eval=TRUE, message=FALSE, echo=FALSE------------------
 result$Descriptives
