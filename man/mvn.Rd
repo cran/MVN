@@ -14,52 +14,60 @@ mvn(
   scale = FALSE,
   descriptives = TRUE,
   transform = "none",
-  R = 1000,
+  impute = "none",
+  bootstrap = FALSE,
+  B = 1000,
+  cores = 1,
   univariate_test = "AD",
   multivariate_outlier_method = "none",
-  box_cox_transform = FALSE,
-  box_cox_transform_type = "optimal",
+  power_family = "none",
+  power_transform_type = "optimal",
   show_new_data = FALSE,
   tidy = TRUE
 )
 }
 \arguments{
-\item{data}{A numeric matrix or data frame (rows = observations, columns = variables).}
+\item{data}{A numeric matrix or data frame where each row represents an observation and each column represents a variable. All variables should be numeric; non-numeric columns will be ignored or cause an error depending on implementation.}
 
-\item{subset}{Optional character; name of a grouping variable in \code{data} for subset analyses.}
+\item{subset}{Optional character string indicating the name of a grouping variable within the data. When provided, analyses will be performed separately for each level of the grouping variable. This is useful for comparing multivariate normality or outlier structure across groups.}
 
-\item{mvn_test}{Character; one of \code{"mardia"}, \code{"hz"}, \code{"royston"}, 
-\code{"doornik_hansen"}, or \code{"energy"}. Default: \code{"hz"}.}
+\item{mvn_test}{A character string specifying which multivariate normality test to use. Supported options include "mardia" (Mardia's test), "hz" (Henze-Zirkler's test), "hw" (Henze-Wagner's test), "royston" (Royston's test), "doornik_hansen" (Doornik-Hansen test), and "energy" (Energy-based test). The default is "hz", which provides good power for detecting departures from multivariate normality.}
 
-\item{use_population}{Logical; if \code{TRUE}, uses the population covariance estimator \eqn{\frac{n-1}{n} \times \Sigma}; otherwise uses the sample covariance. Default is \code{TRUE}.}
+\item{use_population}{A logical value indicating whether to use the population version of the covariance matrix estimator. If TRUE, scales the covariance matrix by (n - 1)/n to estimate the population covariance. If FALSE, the sample covariance matrix is used instead. The default is TRUE.}
 
-\item{tol}{Numeric; tolerance for matrix inversion via \code{solve()}. Default: \code{1e-25}.}
+\item{tol}{A small numeric value used as the tolerance parameter for matrix inversion via solve(). This is important when working with nearly singular covariance matrices. The default value is 1e-25, which ensures numerical stability during matrix computations.}
 
-\item{alpha}{Numeric; significance level for ARW outlier cutoff when 
-\code{multivariate_outlier_method = "adj"}. Default: \code{0.05}.}
+\item{alpha}{A numeric value specifying the significance level used for defining outliers when the multivariate outlier detection method is set to "adj" (adjusted robust weights). This threshold controls the false positive rate for identifying multivariate outliers. The default is 0.05.}
 
-\item{scale}{Logical; if \code{TRUE}, standardizes the data before analysis. Default: \code{FALSE}.}
+\item{scale}{A logical value. If TRUE, the input data will be standardized (zero mean and unit variance) before analysis. This is typically recommended when variables are on different scales. Default is FALSE.}
 
-\item{descriptives}{Logical; if \code{TRUE}, compute descriptive statistics. Default: \code{TRUE}.}
+\item{descriptives}{A logical value indicating whether to compute descriptive statistics (mean, standard deviation, skewness, and kurtosis) for each variable before conducting multivariate normality or outlier analyses. Default is TRUE.}
 
-\item{transform}{Character; one of \code{"none"}, \code{"log"}, \code{"sqrt"}, \code{"square"}.
-Applies marginal transformations before analysis. Default: \code{"none"}.}
+\item{transform}{A character string specifying a marginal transformation to apply to each variable before analysis. Options are "none" (no transformation), "log" (natural logarithm), "sqrt" (square root), and "square" (square of the values). The default is "none".}
 
-\item{R}{Integer; number of bootstrap replicates for \code{"energy"} test. Default: \code{1000}.}
+\item{impute}{A character string specifying method for handling missing data. One of \code{"none"}, \code{"mean"}, \code{"median"}, or \code{"mice"}. Default: \code{"none"}.}
 
-\item{univariate_test}{Character; one of \code{"SW"}, \code{"CVM"}, \code{"Lillie"}, 
-\code{"SF"}, \code{"AD"}. Default: \code{"AD"}.}
+\item{bootstrap}{Logical; if \code{TRUE}, p-values for Mardia, Henze-Zirkler
+and Royston tests are obtained via bootstrap resampling. Default is
+\code{FALSE}.}
 
-\item{multivariate_outlier_method}{Character; \code{"none"}, \code{"quan"}, or \code{"adj"}.
-Default: \code{"none"}.}
+\item{B}{Integer; number of bootstrap replicates used when
+\code{bootstrap = TRUE} or \code{mvn_test = "energy"}. Default is \code{1000}.}
 
-\item{box_cox_transform}{Logical; if \code{TRUE}, applies Box-Cox transformation to all variables. Default: \code{FALSE}.}
+\item{cores}{Integer; number of cores to use for bootstrap computation.
+Default is 1.}
 
-\item{box_cox_transform_type}{Character; either \code{"optimal"} or \code{"rounded"} lambda for Box-Cox. Default: \code{"optimal"}.}
+\item{univariate_test}{A character string indicating which univariate normality test to apply to individual variables when such summaries are requested. Options include "SW" (Shapiro-Wilk), "CVM" (Cramér–von Mises), "Lillie" (Lilliefors/Kolmogorov-Smirnov), "SF" (Shapiro–Francia), and "AD" (Anderson–Darling). Default is "AD".}
 
-\item{show_new_data}{Logical; if \code{TRUE}, include cleaned data (non-outliers). Default: \code{FALSE}.}
+\item{multivariate_outlier_method}{A character string that specifies the method used for detecting multivariate outliers. Options are "none" (no outlier detection), "quan" (robust Mahalanobis distance based on quantile cutoff), and "adj" (adjusted robust weights with a significance threshold). Default is "none".}
 
-\item{tidy}{Logical; if \code{TRUE}, returns the results as a tidy data frame with an added \code{Group} column. Default is \code{TRUE}.}
+\item{power_family}{A character string specifying the type of power transformation family to apply before analysis. Options include "none" (no transformation), "bcPower" (Box-Cox transformation for positive data), "bcnPower" (Box-Cox transformation that allows for negatives), and "yjPower" (Yeo-Johnson transformation for real-valued data). Default is "none".}
+
+\item{power_transform_type}{A character string indicating whether to use the "optimal" or "rounded" lambda value for the selected power transformation. "optimal" uses the estimated value with maximum likelihood, while "rounded" uses the closest integer value for interpretability. Default is "optimal".}
+
+\item{show_new_data}{A logical value. If TRUE, the cleaned data with identified outliers removed will be included in the output. This is useful for downstream analysis after excluding extreme observations. Default is FALSE.}
+
+\item{tidy}{A logical value. If TRUE, the output will be returned as a tidy data frame, making it easier to use with packages from the tidyverse. A "Group" column will be included when subset analysis is performed. Default is TRUE.}
 }
 \value{
 A named list containing:
@@ -70,14 +78,14 @@ A named list containing:
   \item{descriptives}{(Optional) A data frame of descriptive statistics if \code{descriptives = TRUE}.}
   \item{multivariate_outliers}{(Optional) A data frame of flagged multivariate outliers if \code{multivariate_outlier_method != "none"}.}
   \item{new_data}{(Optional) Original data with multivariate outliers removed if \code{show_new_data = TRUE}.}
-  \item{box_cox_lambda}{(Optional) Estimated Box-Cox lambda values if \code{box_cox_transform = TRUE}.}
+  \item{powerTransformLambda}{(Optional) Estimated power transform lambda values if \code{power_family = "bcPower"}.}
   \item{data}{The processed data matrix used in the analysis (transformed and/or cleaned).}
   \item{subset}{(Optional) The grouping variable used for subset analysis, if applicable.}
 }
 }
 \description{
 Conduct multivariate normality tests, outlier detection, univariate normality tests,
-descriptive statistics, and Box-Cox transformation in one wrapper.
+descriptive statistics, and Box-Cox or Yeo-Johnson transformation in one wrapper.
 }
 \details{
 If \code{mvn_test = "mardia"}, it calculates the Mardia's multivariate skewness and kurtosis coefficients as well as their corresponding statistical significance.
@@ -87,10 +95,10 @@ If sample size less than 20 then p.value.small should be used as significance va
 If there are missing values in the data, a listwise deletion will be applied and a complete-case analysis will be performed.
 
 If \code{mvn_test = "hz"}, it calculates the Henze-Zirkler's multivariate normality test. The Henze-Zirkler test is based on a non-negative functional distance that measures the distance between two distribution functions. If the data is multivariate normal, the test statistic HZ is approximately lognormally distributed. It proceeds to calculate the mean, variance and smoothness parameter. Then, mean and variance are lognormalized and the p-value is estimated.
-If there are missing values in the data, a listwise deletion will be applied and a complete-case analysis will be performed.
+
+If \code{mvn_test = "hw"}, it calculates the Henze-Wagner's multivariate normality test. The Henze-Wagner test is based on a class of weighted L2-statistics that quantify the deviation of the empirical characteristic function from that of the multivariate normal distribution. It uses a weight function involving a smoothness parameter to control the influence of differences in the tails. The test statistic is computed and its null distribution is approximated to obtain the p-value.
 
 If \code{mvn_test = "royston"}, it calculates the Royston's multivariate normality test. A function to generate the Shapiro-Wilk's W statistic needed to feed the Royston's H test for multivariate normality However, if kurtosis of the data greater than 3 then Shapiro-Francia test is used for leptokurtic samples else Shapiro-Wilk test is used for platykurtic samples.
-If there are missing values in the data, a listwise deletion will be applied and a complete-case analysis will be performed. Do not apply Royston's test, if dataset includes more than 5000 cases or less than 3 cases, since it depends on Shapiro-Wilk's test.
 
 If \code{mvn_test = "doornik_hansen"}, it calculates the Doornik-Hansen's multivariate normality test. The code is adapted from asbio package (Aho, 2017).
 
@@ -122,7 +130,7 @@ summary(result, select = "new_data")
 \references{
 Korkmaz S, Goksuluk D, Zararsiz G. MVN: An R Package for Assessing Multivariate Normality. The R Journal. 2014 6(2):151-162. URL \url{https://journal.r-project.org/archive/2014-2/korkmaz-goksuluk-zararsiz.pdf}
 
-Mardia, K. V. (1970), Measures of multivariate skewnees and kurtosis with applications. Biometrika, 57(3):519-530.
+Mardia, K. V. (1970), Measures of multivariate skewness and kurtosis with applications. Biometrika, 57(3):519-530.
 
 Mardia, K. V. (1974), Applications of some measures of multivariate skewness and kurtosis for testing normality and robustness studies. Sankhy A, 36:115-128.
 
