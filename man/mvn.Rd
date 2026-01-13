@@ -11,6 +11,7 @@ mvn(
   use_population = TRUE,
   tol = 1e-25,
   alpha = 0.05,
+  outlier_seed = NULL,
   scale = FALSE,
   descriptives = TRUE,
   transform = "none",
@@ -38,6 +39,8 @@ mvn(
 \item{tol}{A small numeric value used as the tolerance parameter for matrix inversion via solve(). This is important when working with nearly singular covariance matrices. The default value is 1e-25, which ensures numerical stability during matrix computations.}
 
 \item{alpha}{A numeric value specifying the significance level used for defining outliers when the multivariate outlier detection method is set to "adj" (adjusted robust weights). This threshold controls the false positive rate for identifying multivariate outliers. The default is 0.05.}
+
+\item{outlier_seed}{Optional integer seed for reproducible robust outlier detection. If NULL, the seed is not set.}
 
 \item{scale}{A logical value. If TRUE, the input data will be standardized (zero mean and unit variance) before analysis. This is typically recommended when variables are on different scales. Default is FALSE.}
 
@@ -128,7 +131,7 @@ summary(result, select = "new_data")
 
 }
 \references{
-Korkmaz S, Goksuluk D, Zararsiz G. MVN: An R Package for Assessing Multivariate Normality. The R Journal. 2014 6(2):151-162. URL \url{https://journal.r-project.org/archive/2014-2/korkmaz-goksuluk-zararsiz.pdf}
+Korkmaz S, Goksuluk D, Zararsiz G. MVN: An R Package for Assessing Multivariate Normality. The R Journal. 2014 6(2):151-162. URL \url{https://journal.r-project.org/articles/RJ-2014-031/RJ-2014-031.pdf}
 
 Mardia, K. V. (1970), Measures of multivariate skewness and kurtosis with applications. Biometrika, 57(3):519-530.
 

@@ -56,27 +56,37 @@ power_transform <- function(data, family = c("bcPower", "bcnPower", "yjPower"), 
     df_complete <- df
   }
   
-  # Estimate power transformation
-  pt      <- car::powerTransform(df_complete, family = family)
-  pt_sum  <- summary(pt)$result
-  lambda_est  <- pt_sum[, "Est Power"]
-  lambda_rounded <- pt_sum[, "Rounded Pwr"]
+  if (family == "bcPower" && any(df <= 0, na.rm = TRUE)) {
+    stop("Box-Cox transformation requires strictly positive data.")
+  }
+  
+  # Estimate power transformation parameters
+  pt <- car::powerTransform(df_complete, family = family)
   lambda <- switch(type,
-                   optimal = lambda_est,
-                   rounded = lambda_rounded)
+                   optimal = pt$lambda,
+                   rounded = pt$roundlam)
   names(lambda) <- names(df)
   
-  # Apply transformation to each column
+  gamma <- NULL
+  if (family == "bcnPower") {
+    gamma <- pt$gamma
+    names(gamma) <- names(df)
+  }
+  
+  # Apply transformation to each column using car's definitions
   transformed <- as.data.frame(
     mapply(
-      function(x, lam) {
-        if (lam == 0) {
-          log(x)
+      function(x, lam, gam) {
+        if (family == "bcPower") {
+          car::bcPower(x, lam, jacobian.adjusted = FALSE)
+        } else if (family == "bcnPower") {
+          car::bcnPower(x, lam, jacobian.adjusted = FALSE, gamma = gam)
         } else {
-          x^lam
+          car::yjPower(x, lam, jacobian.adjusted = FALSE)
         }
       },
       df, lambda,
+      if (is.null(gamma)) rep(list(NULL), ncol(df)) else gamma,
       SIMPLIFY = FALSE
     ),
     stringsAsFactors = FALSE

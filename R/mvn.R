@@ -1,7 +1,7 @@
 utils::globalVariables(c(
   "Statistic", "p.value", "Group", "Test", "Variable", "n", "Mean",
   "Std.Dev", "Median", "Min", "Max", "25th", "75th", "Skew", "Kurtosis",
-  "Observation", "Mahalanobis.Distance"
+  "Observation", "Mahalanobis.Distance", "p.value_num"
 ))
 #' Comprehensive Multivariate Normality and Diagnostic Function
 #'
@@ -14,6 +14,7 @@ utils::globalVariables(c(
 #' @param use_population A logical value indicating whether to use the population version of the covariance matrix estimator. If TRUE, scales the covariance matrix by (n - 1)/n to estimate the population covariance. If FALSE, the sample covariance matrix is used instead. The default is TRUE.
 #' @param tol A small numeric value used as the tolerance parameter for matrix inversion via solve(). This is important when working with nearly singular covariance matrices. The default value is 1e-25, which ensures numerical stability during matrix computations.
 #' @param alpha A numeric value specifying the significance level used for defining outliers when the multivariate outlier detection method is set to "adj" (adjusted robust weights). This threshold controls the false positive rate for identifying multivariate outliers. The default is 0.05.
+#' @param outlier_seed Optional integer seed for reproducible robust outlier detection. If NULL, the seed is not set.
 #' @param scale A logical value. If TRUE, the input data will be standardized (zero mean and unit variance) before analysis. This is typically recommended when variables are on different scales. Default is FALSE.
 #' @param descriptives A logical value indicating whether to compute descriptive statistics (mean, standard deviation, skewness, and kurtosis) for each variable before conducting multivariate normality or outlier analyses. Default is TRUE.
 #' @param transform A character string specifying a marginal transformation to apply to each variable before analysis. Options are "none" (no transformation), "log" (natural logarithm), "sqrt" (square root), and "square" (square of the values). The default is "none".
@@ -64,7 +65,7 @@ utils::globalVariables(c(
 #' @author Selcuk Korkmaz, \email{selcukorkmaz@gmail.com}
 #'
 #' @references
-#' Korkmaz S, Goksuluk D, Zararsiz G. MVN: An R Package for Assessing Multivariate Normality. The R Journal. 2014 6(2):151-162. URL \url{https://journal.r-project.org/archive/2014-2/korkmaz-goksuluk-zararsiz.pdf}
+#' Korkmaz S, Goksuluk D, Zararsiz G. MVN: An R Package for Assessing Multivariate Normality. The R Journal. 2014 6(2):151-162. URL \url{https://journal.r-project.org/articles/RJ-2014-031/RJ-2014-031.pdf}
 #'
 #' Mardia, K. V. (1970), Measures of multivariate skewness and kurtosis with applications. Biometrika, 57(3):519-530.
 #'
@@ -134,6 +135,7 @@ mvn <- function(data,
                 use_population = TRUE,
                 tol = 1e-25,
                 alpha = 0.05,
+                outlier_seed = NULL,
                 scale = FALSE,
                 descriptives = TRUE,
                 transform = "none",
@@ -169,7 +171,7 @@ mvn <- function(data,
     warning("Number of variables exceeds sample size; consider mvn_test = 'hw'.")
   }
   
-  power_family <- match.arg(power_family, c("none", "bcPower", "bcnPower", "bcnPowerInverse", "yjPower", "basicPower"))
+  power_family <- match.arg(power_family, c("none", "bcPower", "bcnPower", "yjPower"))
   power_transform_type <- match.arg(power_transform_type, c("optimal", "rounded"))
   impute <- match.arg(impute, c("none", "mean", "median", "mice"))
   
@@ -335,6 +337,7 @@ mvn <- function(data,
         qqplot = FALSE,
         alpha = alpha,
         method = multivariate_outlier_method,
+        seed = outlier_seed
       )
       mvOutliers = mvOutlierRes$outlier[mvOutlierRes$outlier$Outlier == "TRUE", ]
       newData = mvOutlierRes$newData
@@ -521,6 +524,7 @@ mvn <- function(data,
           qqplot = FALSE,
           alpha = alpha,
           method = multivariate_outlier_method,
+          seed = outlier_seed
         )
         mvOutliers[[i]] = mvOutlierRes$outlier[mvOutlierRes$outlier$Outlier == "TRUE", ]
         newData[[i]] = mvOutlierRes$newData[order(as.numeric(rownames(mvOutlierRes$newData))), ]
@@ -548,9 +552,11 @@ mvn <- function(data,
         ) %>%
         mutate(
           Statistic = round(Statistic, 3),
-          p.value = ifelse(p.value < 0.001, "<0.001", round(p.value, 3)),
-          MVN = ifelse(p.value > 0.05, "\u2713 Normal", "\u2717 Not normal")
-        )
+          p.value_num = p.value,
+          p.value = ifelse(p.value_num < 0.001, "<0.001", round(p.value_num, 3)),
+          MVN = ifelse(p.value_num > 0.05, "\u2713 Normal", "\u2717 Not normal")
+        ) %>%
+        select(-p.value_num)
       
       
       uniResult <- uniResult %>%
@@ -559,10 +565,11 @@ mvn <- function(data,
         select(Group, Test, Variable, Statistic, p.value) %>%
         mutate(
           Statistic = round(Statistic, 3),
-          p.value = ifelse(p.value < 0.001, "<0.001", round(p.value, 3)),
-          Normality = ifelse(p.value > 0.05, "\u2713 Normal", "\u2717 Not normal")
-          
-        )
+          p.value_num = p.value,
+          p.value = ifelse(p.value_num < 0.001, "<0.001", round(p.value_num, 3)),
+          Normality = ifelse(p.value_num > 0.05, "\u2713 Normal", "\u2717 Not normal")
+        ) %>%
+        select(-p.value_num)
       
       if (descriptives) {
         descs <- descs %>%
@@ -629,18 +636,20 @@ mvn <- function(data,
       mvnResult <- mvnResult %>%
         mutate(
           Statistic = round(Statistic, 3),
-          p.value = ifelse(p.value < 0.001, "<0.001", round(p.value, 3)),
-          MVN = ifelse(p.value > 0.05, "\u2713 Normal", "\u2717 Not normal")
-          
-        )
+          p.value_num = p.value,
+          p.value = ifelse(p.value_num < 0.001, "<0.001", round(p.value_num, 3)),
+          MVN = ifelse(p.value_num > 0.05, "\u2713 Normal", "\u2717 Not normal")
+        ) %>%
+        select(-p.value_num)
       
       uniResult <- uniResult %>%
         mutate(
           Statistic = round(Statistic, 3),
-          p.value = ifelse(p.value < 0.001, "<0.001", round(p.value, 3)),
-          Normality = ifelse(p.value > 0.05, "\u2713 Normal", "\u2717 Not normal")
-          
-        )
+          p.value_num = p.value,
+          p.value = ifelse(p.value_num < 0.001, "<0.001", round(p.value_num, 3)),
+          Normality = ifelse(p.value_num > 0.05, "\u2713 Normal", "\u2717 Not normal")
+        ) %>%
+        select(-p.value_num)
       
       if (descriptives) {
         descs <- descs %>%

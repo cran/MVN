@@ -12,6 +12,7 @@ utils::globalVariables(c("is_outlier", "distance", "chi2q"))
 #' @param alpha Numeric; significance level used for the adjusted cutoff method (only applies if \code{method = "adj"}). Default is \code{0.05}.
 #' @param method Character string specifying the outlier detection method. Must be either \code{"quan"} (quantile-based cutoff)
 #' or \code{"adj"} (adjusted cutoff via ARW). Default is \code{"quan"}.
+#' @param seed Optional integer to set the random seed for reproducibility of the MCD estimator. If \code{NULL}, the seed is not set.
 #' @param label Logical; if \code{TRUE} and \code{qqplot = TRUE}, labels the detected outliers in the plot. Default is \code{TRUE}.
 #' @param title Optional character string specifying the title for the Q–Q plot. Default is \code{"Chi-Square Q-Q Plot"}.
 #'
@@ -42,6 +43,7 @@ mv_outlier <- function(data,
                        qqplot = TRUE,
                        alpha = 0.05,
                        method = c("quan", "adj"),
+                       seed = NULL,
                        label = TRUE,
                        title = "Chi-Square Q-Q Plot") {
   
@@ -57,7 +59,15 @@ mv_outlier <- function(data,
   n <- nrow(data)
   p <- ncol(data)
   
-  set.seed(123)
+  if (!is.null(seed)) {
+    if (exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
+      old_seed <- get(".Random.seed", envir = .GlobalEnv)
+      on.exit(assign(".Random.seed", old_seed, envir = .GlobalEnv), add = TRUE)
+    } else {
+      on.exit(rm(".Random.seed", envir = .GlobalEnv), add = TRUE)
+    }
+    set.seed(seed)
+  }
   covr <- cov.mcd(data, method = "mcd")
   mah <- mahalanobis(data, center = covr$center, cov = covr$cov)
   dname <- deparse(substitute(data))
@@ -76,8 +86,8 @@ mv_outlier <- function(data,
   newData <- NULL
   
   if (method == "adj") {
-    crt <- arw_adjustment(x = data, m0 = covr$center, c0 = covr$cov, alpha = 0.025)$cn
-    out$Outlier <- ifelse(out$Mahalanobis.Distance > crt, "TRUE", "FALSE")
+    crt <- arw_adjustment(x = data, m0 = covr$center, c0 = covr$cov, alpha = alpha)$cn
+    out$Outlier <- ifelse(sortMah$Mahalanobis > crt, "TRUE", "FALSE")
     
     if (qqplot) {
       df <- data.frame(
@@ -146,7 +156,7 @@ mv_outlier <- function(data,
   
   if (method == "quan") {
     chiSq <- qchisq(0.975, p)
-    out$Outlier <- ifelse(out$Mahalanobis.Distance > chiSq, "TRUE", "FALSE")
+    out$Outlier <- ifelse(sortMah$Mahalanobis > chiSq, "TRUE", "FALSE")
     
     if (qqplot) {
       df2 <- data.frame(

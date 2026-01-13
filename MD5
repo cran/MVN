@@ -1,4 +1,4 @@
-acf137b07c98af1b1953cec3aa601e4d *DESCRIPTION
+500a0b0eec86bf286c4c4d7b8041876e *DESCRIPTION
 05f1dacbd9749314804a824ea959995e *LICENSE
 0dad49da938c156582d92f76e8c6c7f3 *NAMESPACE
 0009d582e15d5b6e122d65ab10fef5bb *R/arw_adjustment.R
@@ -10,17 +10,17 @@ acf137b07c98af1b1953cec3aa601e4d *DESCRIPTION
 92eaee2b1d654ea1757d9ef524b5d8ba *R/impute_missing.R
 5f8a26f34789b113fddab2b142da16b6 *R/mardia.R
 6ccb8dcf08bdd91b4579c6df677ec9a7 *R/multivariate_diagnostic_plot.R
-96fe2c2f8271f2694bdc14033e05bf5e *R/mv_outlier.R
-33ff9979c6c3c8f304bc2a3d28aa4779 *R/mvn.R
+47e6891035507a0bd349671bd20da359 *R/mv_outlier.R
+bd14fce11735e83291c9c5df8dd97073 *R/mvn.R
 073acddbf57ec66bc929c2a7f0f50e13 *R/plot.mvn.R
-8206190ec79cd7151eb2334d15a17b86 *R/power_transform.R
+535074e226b822f7b9d81d297d66cb3f *R/power_transform.R
 ae2c3dae5910ce4aba338ce844ed07e0 *R/royston.R
 917ffacecc71655ee0283133a3772a71 *R/run_mvn_app.R
 45176b97c950bc163f85bd0cc29463ca *R/summary.mvn.R
 5e40652902ec564ebb20de0ff132911f *R/test_univariate_normality.R
 a3a828ce2b0de4450cac76c6917565b9 *R/univariate_diagnostic_plot.R
 6783f54a2fdb6f3a98c2b55ea1d3e38d *README.md
-61bbf3d52c412029804049b6791e2d8a *inst/CITATION
+24b32b7ac0e1476ee34cddaddb4d082b *inst/CITATION
 f5543f8c616b18c43c712ed840fc9f09 *inst/mvn-shiny-app/app.R
 7e0548176eb1993c05aeb050fa027620 *inst/mvn-shiny-app/app_server.R
 4a07a2d8ddfa17d8531a5af098cef1a2 *inst/mvn-shiny-app/app_ui.R
@@ -31,7 +31,7 @@ f5543f8c616b18c43c712ed840fc9f09 *inst/mvn-shiny-app/app.R
 5cc763a12c14d804a9d088f34e39b6ce *inst/mvn-shiny-app/modules/mod_graphs.R
 02b834e14094262b6fd5e1967ebaa15f *inst/mvn-shiny-app/modules/mod_report.R
 60d7876a260f2f802eeb302ce7960580 *inst/mvn-shiny-app/modules/mod_results.R
-74500216dcf5ed6b06f7936a3202d032 *inst/mvn-shiny-app/rsconnect/shinyapps.io/biosoft/mvn-shiny-app.dcf
+1b3e4452d7748bcf8a56095ff29526b6 *inst/mvn-shiny-app/rsconnect/shinyapps.io/biosoft/mvn-shiny-app.dcf
 37789d419108d30caf928875c818883d *man/arw_adjustment.Rd
 e3e9141a22c7e39d4f1fe7d4ef423518 *man/descriptives.Rd
 a53906fae591fc08a08b5b2e098635a8 *man/doornik_hansen.Rd
@@ -42,8 +42,8 @@ d9ef090756a9ed2dddacbe1a57a36bb8 *man/hw.Rd
 a3084dc7140d9fc5d2e29c7d2a092264 *man/impute_missing.Rd
 b48483b88a44d82d166b84c04cc3450b *man/mardia.Rd
 de56b4fbf552ea62e2b5faafc861453e *man/multivariate_diagnostic_plot.Rd
-0e5f4c9146229bdbb70e43e1b5755190 *man/mv_outlier.Rd
-2275f1b4fa089c27651e79105f829185 *man/mvn.Rd
+f2dbe1b9f05d1cf53c030cd4dbc1c199 *man/mv_outlier.Rd
+6f485b342612e8edce6a65bc21a31395 *man/mvn.Rd
 b24f4e1528162c7dfb08271ce8865d2c *man/plot.mvn.Rd
 8f2c9bb2240a42ff7a5a0f11d4534be3 *man/power_transform.Rd
 ef1cce26c852f5a35848a1ac041447bb *man/royston.Rd
@@ -51,3 +51,7 @@ f11df8a2f9a42f31d0e61978d86889ac *man/run_mvn_app.Rd
 df51f0020c4bc9f1edf5d08ec4fb5063 *man/summary.mvn.Rd
 e450c3ca324d8cdd88f63c86ed13a16b *man/test_univariate_normality.Rd
 c2b6d861d8eefdd25f8b89b29d3333a7 *man/univariate_diagnostic_plot.Rd
+99a2be935d4b03e3a62b23764bcde11e *tests/testthat.R
+307cfc6ff474c229bab3730b6ee97b62 *tests/testthat/test-mv-outlier.R
+74908c6ee5fdeea95ade5e07baa201c9 *tests/testthat/test-mvn-tidy.R
+88c39a7a9617685638a430e72e03eea1 *tests/testthat/test-power-transform.R

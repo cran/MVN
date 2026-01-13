@@ -1,7 +1,7 @@
 Package: MVN
 Type: Package
 Title: Multivariate Normality Tests
-Version: 6.2
+Version: 6.3
 Authors@R: 
     c(
       person(given = "Selcuk", family = "Korkmaz", role = c("aut", "cre"),
@@ -16,7 +16,8 @@ Imports: methods, nortest, moments, MASS, boot, car, dplyr, tidyr,
         purrr, stringr, tibble, ggplot2, viridis, cli, energy, plotly,
         mice
 Suggests: DT, bslib, future, haven, jsonlite, readxl, shiny, yaml,
-        promises, zip
+        promises, testthat (>= 3.0.0), zip
+Config/testthat/edition: 3
 Collate: 'mvn.R' 'mardia.R' 'hz.R' 'hw.R' 'royston.R'
         'doornik_hansen.R' 'energy.R' 'descriptives.R'
         'test_univariate_normality.R' 'multivariate_diagnostic_plot.R'
@@ -30,19 +31,19 @@ Description:
     detection, power transformations (e.g., Box–Cox, Yeo–Johnson), and imputation strategies 
     ("mean", "median", "mice") for handling missing data. Bootstrap resampling is supported 
     for selected tests to improve p-value accuracy in small samples.
-    Diagnostic plots are available via both 'ggplot2' and interactive 'plotly' visualizations. See Korkmaz et al. (2014) <https://journal.r-project.org/archive/2014-2/korkmaz-goksuluk-zararsiz.pdf>.
+    Diagnostic plots are available via both 'ggplot2' and interactive 'plotly' visualizations. See Korkmaz et al. (2014) <https://journal.r-project.org/articles/RJ-2014-031/RJ-2014-031.pdf>.
 Encoding: UTF-8
 License: MIT + file LICENSE
-URL: https://selcukorkmaz.github.io/mvn-tutorial/,
-        https://github.com/selcukorkmaz/MVN,
-        http://biosoft.erciyes.edu.tr/app/MVN
+URL: https://biosoft.shinyapps.io/mvn-shiny-app/,
+        https://selcukorkmaz.github.io/mvn-tutorial/,
+        https://github.com/selcukorkmaz/MVN
 BugReports: https://github.com/selcukorkmaz/MVN/issues
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 NeedsCompilation: no
-Packaged: 2025-10-10 08:44:43 UTC; selcukkorkmaz
+Packaged: 2026-01-12 22:36:42 UTC; selcuk
 Author: Selcuk Korkmaz [aut, cre] (ORCID:
     <https://orcid.org/0000-0003-4632-6850>),
   Dincer Goksuluk [aut],
   Gokmen Zararsiz [aut]
 Repository: CRAN
-Date/Publication: 2025-10-10 10:40:02 UTC
+Date/Publication: 2026-01-13 06:10:41 UTC

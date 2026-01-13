@@ -10,6 +10,7 @@ mv_outlier(
   qqplot = TRUE,
   alpha = 0.05,
   method = c("quan", "adj"),
+  seed = NULL,
   label = TRUE,
   title = "Chi-Square Q-Q Plot"
 )
@@ -26,6 +27,8 @@ If \code{FALSE}, suppresses this component. Default is \code{TRUE}.}
 
 \item{method}{Character string specifying the outlier detection method. Must be either \code{"quan"} (quantile-based cutoff)
 or \code{"adj"} (adjusted cutoff via ARW). Default is \code{"quan"}.}
+
+\item{seed}{Optional integer to set the random seed for reproducibility of the MCD estimator. If \code{NULL}, the seed is not set.}
 
 \item{label}{Logical; if \code{TRUE} and \code{qqplot = TRUE}, labels the detected outliers in the plot. Default is \code{TRUE}.}
 

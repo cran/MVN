@@ -13,6 +13,6 @@ bibentry(
   volume  = "6",
   number  = "2",
   pages   = "151--162",
-  url     = "https://journal.r-project.org/archive/2014-2/korkmaz-goksuluk-zararsiz.pdf",
+  url     = "https://journal.r-project.org/articles/RJ-2014-031/RJ-2014-031.pdf",
   textVersion = "Korkmaz S, Goksuluk D, Zararsiz G. MVN: An R Package for Assessing Multivariate Normality. The R Journal. 2014; 6(2):151-162."
 )
